@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
+import {
+  withAuthUser,
+  AuthAction,
+  withAuthUserTokenSSR,
+} from "next-firebase-auth";
+
+//components
 
 const Home = () => {
-  return (
-    <div className="">
-      <h1>homepage</h1>
-    </div>
-  );
+  return <div className="">homepage</div>;
 };
 
-export default Home;
+export const getServerSideProps = withAuthUserTokenSSR({
+  whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
+})();
+
+//needed for client side routing when logged out
+export default withAuthUser({
+  whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
+})(Home);

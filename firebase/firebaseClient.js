@@ -1,0 +1,22 @@
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
+import "firebase/functions";
+
+if (!firebase.apps.length) {
+  firebase.initializeApp({
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY,
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  });
+}
+
+export const auth = firebase.auth();
+export const firestore = firebase.firestore();
+export const functions = firebase.functions();
+
+//development only
+// firestore.useEmulator("localhost", 8080);
+functions.useEmulator("localhost", 5001);
+
+export default firebase;
