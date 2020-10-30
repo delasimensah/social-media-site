@@ -1,43 +1,7 @@
-import React, { useState } from "react";
-import { AuthAction, withAuthUser, withAuthUserSSR } from "next-firebase-auth";
+import React from "react";
 import Link from "next/link";
-import { authState } from "../contexts/AuthContext";
 
 const Login = () => {
-  const { login } = authState();
-
-  const [cred, setCred] = useState({
-    email: "",
-    password: "",
-  });
-
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setCred({
-      ...cred,
-      [name]: value,
-    });
-  };
-
-  const loginUser = async () => {
-    const { email, password } = cred;
-
-    if (email === "" || password === "") return setError("All fields required");
-
-    setLoading(true);
-
-    try {
-      await login(email, password);
-    } catch (error) {
-      setError(error.message);
-      setLoading(false);
-    }
-  };
-
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="w-4/5 p-5 space-y-10 rounded-md shadow-md md:w-2/5">
@@ -90,11 +54,6 @@ const Login = () => {
 };
 
 //server side redirect when still authenticated
-export const getServerSideProps = withAuthUserSSR({
-  whenAuthed: AuthAction.REDIRECT_TO_APP,
-})();
 
 //needed for client-side routing when authenticated
-export default withAuthUser({
-  whenAuthed: AuthAction.REDIRECT_TO_APP,
-})(Login);
+export default Login;

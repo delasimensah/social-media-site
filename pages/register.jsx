@@ -1,49 +1,7 @@
-import React, { useState } from "react";
-import { AuthAction, withAuthUserSSR } from "next-firebase-auth";
+import React from "react";
 import Link from "next/link";
-import { authState } from "../contexts/AuthContext";
-import { useRouter } from "next/router";
 
 const RegisterPage = () => {
-  const { register } = authState();
-  const router = useRouter();
-
-  const [cred, setCred] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setCred({
-      ...cred,
-      [name]: value,
-    });
-  };
-
-  const registerUser = async () => {
-    const { email, password, name } = cred;
-
-    if (email === "" || password === "" || name === "")
-      return setError("All fields required");
-
-    setLoading(true);
-
-    try {
-      await register(cred);
-
-      router.push("/");
-    } catch (error) {
-      setError(error.message);
-      setLoading(false);
-    }
-  };
-
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="w-4/5 p-5 space-y-10 rounded-md shadow-md md:w-2/5">
@@ -90,9 +48,5 @@ const RegisterPage = () => {
     </div>
   );
 };
-
-export const getServerSideProps = withAuthUserSSR({
-  whenAuthed: AuthAction.REDIRECT_TO_APP,
-})();
 
 export default RegisterPage;
