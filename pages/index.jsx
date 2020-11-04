@@ -1,14 +1,16 @@
 import React from "react";
-// import {
-//   withAuthUser,
-//   AuthAction,
-//   withAuthUserTokenSSR,
-// } from "next-firebase-auth";
 
 //components
+import Layout from "../components/Layout";
 
-const Home = () => {
-  return <div className="">homepage</div>;
+const HomePage = () => {
+  return (
+    <Layout>
+      <div className="h-screen bg-[#f4f4f4]">
+        <h1 className="">Homepage</h1>
+      </div>
+    </Layout>
+  );
 };
 
-export default Home;
+export default HomePage;
