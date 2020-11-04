@@ -2,9 +2,9 @@ import React from "react";
 
 const Notifications = () => {
   return (
-    <div>
+    <div className="">
       <div className="arrow-up" />
-      <div className={`flex flex-col text-black bg-white rounded-md`}>
+      <div className={`flex flex-col text-black bg-white`}>
         <a href="/analytics">Analytics</a>
         <a href="/engagement">Engagement</a>
         <a href="/security">Security</a>

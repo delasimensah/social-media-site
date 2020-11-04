@@ -1,7 +1,10 @@
 import React from "react";
 
+//components
+import Layout from "../components/Layout";
+
 const ProfilePage = () => {
-  return <div>profile page</div>;
+  return <Layout>profile page</Layout>;
 };
 
 export default ProfilePage;
