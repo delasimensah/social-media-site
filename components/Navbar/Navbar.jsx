@@ -12,15 +12,16 @@ import Dropdown from "./Dropdown";
 import MenuLink from "./MenuLink";
 import Notifications from "./Notifications";
 import ProfileImg from "./ProfileImg";
-import OtherLinks from "./OtherLinks";
+import DropdownMenu from "./DropdownMenu";
 import SearchInput from "./SearchInput";
+import Logo from "./Logo";
 
 const Navbar = () => {
   return (
-    <div className="sticky flex items-center justify-between md:justify-start px-3 md:px-16 lg:px-40 py-2 dark:text-white bg-white dark:bg-[#151a23] shadow-md">
+    <div className="sticky flex items-center justify-between px-3 py-2 bg-white shadow-md md:justify-start md:px-16 lg:px-40 dark:bg-dark">
       <Link href="/">
         <a className="w-16">
-          <img src="/logo.svg" alt="" />
+          <Logo className="fill-current dark:text-white" />
         </a>
       </Link>
 
@@ -28,7 +29,7 @@ const Navbar = () => {
         <SearchInput />
       </div>
 
-      <div className="flex items-center space-x-6 border">
+      <div className="flex items-center space-x-6">
         <MenuLink link="/" icon={<IoHomeOutline className="nav-icon" />} />
 
         <MenuLink
@@ -39,11 +40,12 @@ const Navbar = () => {
         <Dropdown
           icon={<IoNotificationsOutline className="nav-icon" />}
           menu={<Notifications />}
+          w="w-96"
         />
 
         <ColorModeButton />
 
-        <Dropdown image={<ProfileImg />} menu={<OtherLinks />} />
+        <Dropdown image={<ProfileImg />} menu={<DropdownMenu />} w="w-52" />
       </div>
     </div>
   );

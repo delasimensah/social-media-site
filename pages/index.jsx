@@ -6,7 +6,7 @@ import Layout from "../components/Layout";
 const HomePage = () => {
   return (
     <Layout>
-      <div className="">
+      <div className="h-96">
         <h1 className="">Homepage</h1>
       </div>
     </Layout>
