@@ -3,10 +3,10 @@ import Image from "next/image";
 
 const ProfileImg = () => {
   return (
-    <div className="w-6 h-6 overflow-hidden border rounded-full">
+    <div className="w-6 h-6 overflow-hidden rounded-full">
       <Image
         src="/me.jpg"
-        alt="Picture of the author"
+        alt="profile picture"
         width={50}
         height={50}
         className=""

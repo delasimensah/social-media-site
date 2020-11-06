@@ -9,7 +9,7 @@ import DropdownItem from "./DropdownItem";
 const DropdownMenu = () => {
   return (
     <>
-      <DropdownArrow className="left-24" />
+      <DropdownArrow className="left-44 lg:left-24" />
 
       <div className="overflow-hidden rounded-lg shadow-lg">
         <div className="relative grid bg-white dark:bg-dark ">
