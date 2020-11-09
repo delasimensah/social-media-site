@@ -18,9 +18,9 @@ import Logo from "../Logo";
 
 const Navbar = () => {
   return (
-    <div className="fixed top-0 left-0 flex items-center justify-between w-screen px-3 py-3 bg-white shadow-md md:justify-start md:px-16 lg:px-40 dark:bg-dark">
+    <div className="fixed top-0 left-0 flex items-center justify-between w-screen px-3 py-5 bg-white shadow-md md:justify-start md:px-16 lg:px-40 dark:bg-dark">
       <Link href="/">
-        <a className="w-16">
+        <a className="w-20">
           <Logo />
         </a>
       </Link>
