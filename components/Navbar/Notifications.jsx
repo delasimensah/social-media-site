@@ -7,7 +7,7 @@ const Notifications = () => {
   return (
     <>
       <DropdownArrow className="left-[180px]" />
-      <div className="overflow-hidden rounded-lg shadow-lg">
+      <div className="overflow-hidden rounded-md shadow-lg">
         <div className="relative grid bg-white dark:bg-dark dark:text-white">
           <div className="flex items-center justify-center h-20">
             <p className="capitalize">no notifications</p>
