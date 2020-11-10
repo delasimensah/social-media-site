@@ -2,7 +2,7 @@ import React from "react";
 
 const FormInput = ({ name, type, placeholder, onChange, value, icon }) => {
   return (
-    <div className="flex items-center px-4 py-2 focus-within:bg-white focus-within:shadow-md transition-all duration-500 ease-in-out space-x-3 bg-[#f7f7f7] dark:bg-darklight rounded-full">
+    <div className="flex items-center px-4 py-2 focus-within:bg-white focus-within:shadow-md transition-shadow duration-500 ease-in-out space-x-3 bg-[#f7f7f7] dark:bg-darklight rounded-full">
       {icon}
       <input
         type={type}
