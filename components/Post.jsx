@@ -1,0 +1,119 @@
+import React, { useState } from "react";
+import Image from "next/image";
+import {
+  IoEllipsisVertical,
+  IoChatbubbleOutline,
+  IoHeartOutline,
+  IoHeart,
+} from "react-icons/io5";
+
+//components
+import Dropdown from "./Navbar/Dropdown";
+import DropdownMenu from "./Navbar/DropdownMenu";
+
+const Post = ({ post, setOpen, setImg }) => {
+  const [liked, setLiked] = useState(false);
+
+  return (
+    <div className="bg-white dark:bg-[#202836] rounded-md shadow-md p-5 space-y-3">
+      <div className="flex items-center space-x-2">
+        <div className="w-10 h-10 md:w-12 md:h-14">
+          <Image
+            src={post.profileImage}
+            alt="profile picture"
+            width={100}
+            height={100}
+            className="rounded-full"
+          />
+        </div>
+
+        <div className="flex-grow">
+          <h1 className="dark:text-gray-300">{post.name}</h1>
+          <p className="text-[12px] text-gray-400">{post.createdAt}</p>
+        </div>
+
+        <div>
+          <Dropdown
+            icon={<IoEllipsisVertical className="dark:text-gray-400" />}
+            menu={<DropdownMenu />}
+            w="w-52"
+          />
+        </div>
+      </div>
+
+      <div className="">
+        <p className="text-sm text-gray-700 dark:text-gray-400">{post.text}</p>
+      </div>
+
+      {post.images.length > 0 && (
+        <div
+          className={`grid gap-1 md:gap-3 ${
+            post.images.length > 1 ? "grid-cols-2" : "grid-cols-1"
+          } h-60 md:h-96`}
+        >
+          {post.images.map((img, idx) => {
+            return (
+              <div
+                key={idx}
+                className={`${post.images.length === 3 &&
+                  "first:row-span-2"} overflow-hidden rounded-md cursor-pointer bg-gray-700/20`}
+              >
+                <img
+                  src={img}
+                  alt=""
+                  className="object-cover object-top w-full h-full"
+                  onClick={() => {
+                    setOpen(true);
+                    setImg(img);
+                  }}
+                />
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      <div className="flex items-center space-x-5">
+        <div className="flex items-center space-x-1">
+          {liked ? (
+            <IoHeart className="text-red-600 cursor-pointer w-7 h-7 " />
+          ) : (
+            <IoHeartOutline className="cursor-pointer w-7 h-7 dark:text-gray-400" />
+          )}
+
+          <span className="dark:text-gray-400">12.6k</span>
+
+          <div className="flex -space-x-1 overflow-hidden">
+            <img
+              className="inline-block w-6 h-6 rounded-full ring-2 ring-white dark:ring-[#202836]"
+              src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              alt=""
+            />
+            <img
+              className="inline-block w-6 h-6 rounded-full ring-2 ring-white dark:ring-[#202836]"
+              src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              alt=""
+            />
+            <img
+              className="inline-block w-6 h-6 rounded-full ring-2 ring-white dark:ring-[#202836]"
+              src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
+              alt=""
+            />
+            <img
+              className="inline-block w-6 h-6 rounded-full ring-2 ring-white dark:ring-[#202836]"
+              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              alt=""
+            />
+          </div>
+        </div>
+
+        <div className="flex items-center space-x-1">
+          <IoChatbubbleOutline className="cursor-pointer w-7 h-7 dark:text-gray-400" />
+          <span className="dark:text-gray-400">10k</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Post;
