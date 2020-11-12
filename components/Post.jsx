@@ -6,10 +6,12 @@ import {
   IoHeartOutline,
   IoHeart,
 } from "react-icons/io5";
+import Link from "next/link";
+import { format } from "timeago.js";
 
 //components
 import Dropdown from "./Navbar/Dropdown";
-import DropdownMenu from "./Navbar/DropdownMenu";
+import PostDropdown from "./PostDropdown";
 
 const Post = ({ post, setOpen, setImg }) => {
   const [liked, setLiked] = useState(false);
@@ -18,25 +20,32 @@ const Post = ({ post, setOpen, setImg }) => {
     <div className="bg-white dark:bg-[#202836] rounded-md shadow-md p-5 space-y-3">
       <div className="flex items-center space-x-2">
         <div className="w-10 h-10 md:w-12 md:h-14">
-          <Image
-            src={post.profileImage}
-            alt="profile picture"
-            width={100}
-            height={100}
-            className="rounded-full"
-          />
+          <Link href={`/profile/${post.name}`}>
+            <a>
+              <Image
+                src={post.profileImage}
+                alt="profile picture"
+                width={100}
+                height={100}
+                className="rounded-full"
+              />
+            </a>
+          </Link>
         </div>
 
         <div className="flex-grow">
-          <h1 className="dark:text-gray-300">{post.name}</h1>
-          <p className="text-[12px] text-gray-400">{post.createdAt}</p>
+          <Link href={`/profile/${post.name}`}>
+            <a className="dark:text-gray-300 text-[14px]">{post.name}</a>
+          </Link>
+
+          <p className="text-[12px] text-gray-400">{format(post.createdAt)}</p>
         </div>
 
         <div>
           <Dropdown
             icon={<IoEllipsisVertical className="dark:text-gray-400" />}
-            menu={<DropdownMenu />}
-            w="w-52"
+            menu={<PostDropdown />}
+            w="w-48"
           />
         </div>
       </div>
@@ -74,12 +83,14 @@ const Post = ({ post, setOpen, setImg }) => {
       )}
 
       <div className="flex items-center space-x-5">
-        <div className="flex items-center space-x-1">
-          {liked ? (
-            <IoHeart className="text-red-600 cursor-pointer w-7 h-7 " />
-          ) : (
-            <IoHeartOutline className="cursor-pointer w-7 h-7 dark:text-gray-400" />
-          )}
+        <div className="flex items-center space-x-2">
+          <button onClick={() => setLiked(!liked)}>
+            {liked ? (
+              <IoHeart className="text-red-600 cursor-pointer w-7 h-7 " />
+            ) : (
+              <IoHeartOutline className="cursor-pointer w-7 h-7 dark:text-gray-400" />
+            )}
+          </button>
 
           <span className="dark:text-gray-400">12.6k</span>
 
@@ -107,9 +118,31 @@ const Post = ({ post, setOpen, setImg }) => {
           </div>
         </div>
 
-        <div className="flex items-center space-x-1">
+        <div className="flex items-center space-x-2">
           <IoChatbubbleOutline className="cursor-pointer w-7 h-7 dark:text-gray-400" />
           <span className="dark:text-gray-400">10k</span>
+          <div className="flex -space-x-1 overflow-hidden">
+            <img
+              className="inline-block w-6 h-6 rounded-full ring-2 ring-white dark:ring-[#202836]"
+              src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              alt=""
+            />
+            <img
+              className="inline-block w-6 h-6 rounded-full ring-2 ring-white dark:ring-[#202836]"
+              src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              alt=""
+            />
+            <img
+              className="inline-block w-6 h-6 rounded-full ring-2 ring-white dark:ring-[#202836]"
+              src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
+              alt=""
+            />
+            <img
+              className="inline-block w-6 h-6 rounded-full ring-2 ring-white dark:ring-[#202836]"
+              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              alt=""
+            />
+          </div>
         </div>
       </div>
     </div>
