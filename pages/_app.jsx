@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Head from "next/head";
+import Provider from "../contexts/Provider";
 
 import "../styles/globals.css";
 
@@ -20,7 +21,9 @@ const MyApp = ({ Component, pageProps }) => {
         <link rel="icon" href="/favicon.png" />
       </Head>
 
-      <Component {...pageProps} />
+      <Provider>
+        <Component {...pageProps} />
+      </Provider>
     </>
   );
 };

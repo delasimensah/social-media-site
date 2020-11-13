@@ -8,12 +8,14 @@ import {
 } from "react-icons/io5";
 import Link from "next/link";
 import { format } from "timeago.js";
+import { imageModalState } from "../contexts/ImageModalContext";
 
 //components
 import Dropdown from "./Navbar/Dropdown";
 import PostDropdown from "./PostDropdown";
 
-const Post = ({ post, setOpen, setImg }) => {
+const Post = ({ post }) => {
+  const { setOpen, setImg } = imageModalState();
   const [liked, setLiked] = useState(false);
 
   return (
