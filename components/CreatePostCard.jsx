@@ -10,13 +10,11 @@ const CreatePostCard = () => {
   return (
     <div className="bg-white dark:bg-[#202836]  divide-y dark:divide-gray-700 rounded-md shadow-md focus-within:shadow-lg transition-shadow duration-500 ease-in-out">
       <div className="flex px-3 py-5 space-x-5">
-        <div className="w-10 h-10 md:w-12 md:h-14">
-          <Image
+        <div className="w-10 h-10 md:w-12 md:h-12">
+          <img
             src="/me.jpg"
             alt="profile picture"
-            width={100}
-            height={100}
-            className="rounded-full"
+            className="w-full h-full rounded-full"
           />
         </div>
 
