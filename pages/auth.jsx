@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Link from "next/link";
 import Fade from "react-reveal/Fade";
+import { AuthAction, withAuthUser, withAuthUserSSR } from "next-firebase-auth";
+import { authState } from "../contexts/AuthContext";
 
 import {
   IoMailOutline,
@@ -14,14 +16,42 @@ import Logo from "../components/Logo";
 import FormInput from "../components/FormInput";
 
 const AuthPage = () => {
+  const { signin, signup } = authState();
+  const nameRef = useRef();
+  const emailRef = useRef();
+  const passwordRef = useRef();
+
   const [isSignIn, setIsSignIn] = useState(true);
   const [loading, setLoading] = useState(false);
 
-  const signIn = () => {
-    console.log("sign in");
+  const signIn = async () => {
+    setLoading(true);
+
+    try {
+      await signin(emailRef.current.value, passwordRef.current.value);
+
+      setLoading(false);
+    } catch {
+      console.log("error");
+      setLoading(false);
+    }
   };
-  const signUp = () => {
-    console.log("sign up");
+
+  const signUp = async () => {
+    setLoading(true);
+
+    try {
+      await signup(
+        nameRef.current.value,
+        emailRef.current.value,
+        passwordRef.current.value
+      );
+
+      setLoading(false);
+    } catch {
+      console.log("error");
+      setLoading(false);
+    }
   };
 
   return (
@@ -58,8 +88,9 @@ const AuthPage = () => {
                   <FormInput
                     name="name"
                     type="text"
-                    placeholder="Full Name"
+                    placeholder="Username"
                     icon={<IoPersonCircleOutline className="form-icon" />}
+                    val={nameRef}
                   />
                 )}
                 <FormInput
@@ -67,6 +98,7 @@ const AuthPage = () => {
                   type="email"
                   placeholder="Email"
                   icon={<IoMailOutline className="form-icon" />}
+                  val={emailRef}
                 />
 
                 <FormInput
@@ -74,13 +106,14 @@ const AuthPage = () => {
                   type="password"
                   placeholder="Password"
                   icon={<IoKeyOutline className="form-icon" />}
+                  val={passwordRef}
                 />
               </form>
             </Fade>
 
             {isSignIn && (
               <div className="flex justify-end w-64">
-                <Link href="/">
+                <Link href="/reset-password">
                   <a className="text-sm text-purple-600 underline capitalize">
                     forgot password?
                   </a>
@@ -121,4 +154,14 @@ const AuthPage = () => {
   );
 };
 
-export default AuthPage;
+//server side redirect when still authenticated
+export const getServerSideProps = withAuthUserSSR({
+  whenAuthed: AuthAction.REDIRECT_TO_APP,
+})();
+
+//needed for client-side routing when authenticated
+export default withAuthUser({
+  whenAuthed: AuthAction.REDIRECT_TO_APP,
+})(AuthPage);
+
+// export default AuthPage;
