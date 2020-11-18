@@ -4,21 +4,15 @@ import {
   withAuthUser,
   AuthAction,
   withAuthUserTokenSSR,
-  useAuthUser,
 } from "next-firebase-auth";
-import { auth } from "../firebase/firebaseClient";
 
 //components
 import Layout from "../components/Layout";
 import CreatePostCard from "../components/CreatePostCard";
 import Feed from "../components/Feed";
-import ImageModal from "../components/ImageModal";
 import Suggestions from "../components/Suggestions";
 
 const HomePage = () => {
-  const AuthUser = useAuthUser();
-  console.log(AuthUser.displayName);
-
   return (
     <Layout>
       <div className="container grid grid-cols-1 lg:grid-cols-[2fr,1fr] gap-10">
@@ -31,8 +25,6 @@ const HomePage = () => {
           <Suggestions />
         </div>
       </div>
-
-      <ImageModal />
     </Layout>
   );
 };
@@ -41,7 +33,6 @@ export const getServerSideProps = withAuthUserTokenSSR({
   whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
 })();
 
-//needed for client side routing when logged out
 export default withAuthUser({
   whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
 })(HomePage);

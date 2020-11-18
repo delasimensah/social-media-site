@@ -4,12 +4,10 @@ import Fade from "react-reveal/Fade";
 import { AuthAction, withAuthUser, withAuthUserSSR } from "next-firebase-auth";
 import { authState } from "../contexts/AuthContext";
 
-import {
-  IoMailOutline,
-  IoPersonCircleOutline,
-  IoKeyOutline,
-  IoCogOutline,
-} from "react-icons/io5";
+//chakra ui
+import { useToast } from "@chakra-ui/react";
+
+import { IoMailOutline, IoCogOutline } from "react-icons/io5";
 
 //components
 import Logo from "../components/Logo";
@@ -19,16 +17,41 @@ const AuthPage = () => {
   const { resetPassword } = authState();
   const emailRef = useRef();
 
+  const toast = useToast();
+
   const [loading, setLoading] = useState(false);
 
   const reset = async () => {
+    if (emailRef.current.value === "") {
+      return toast({
+        description: "Email required.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "bottom-right",
+      });
+    }
     setLoading(true);
     try {
       await resetPassword(emailRef.current.value);
 
+      toast({
+        description: "Check email for further instructions.",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+        position: "bottom-right",
+      });
+
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      toast({
+        description: `${error.message}`,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "bottom-right",
+      });
 
       setLoading(false);
     }

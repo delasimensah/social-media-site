@@ -10,7 +10,7 @@ const initAuth = () => {
     appPageURL: "/",
     loginAPIEndpoint: "/api/login",
     logoutAPIEndpoint: "/api/logout",
-    // firebaseAuthEmulatorHost: "localhost:9099",
+    firebaseAuthEmulatorHost: "localhost:9099",
     firebaseAdminInitConfig: {
       credential: {
         projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
