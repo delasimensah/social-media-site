@@ -5,7 +5,7 @@ import { AuthAction, withAuthUser, withAuthUserSSR } from "next-firebase-auth";
 import { authState } from "../contexts/AuthContext";
 
 //chakra ui
-import { useToast } from "@chakra-ui/react";
+// import { useToast } from "@chakra-ui/react";
 
 import {
   IoMailOutline,
@@ -24,62 +24,62 @@ const AuthPage = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
 
-  const toast = useToast();
+  // const toast = useToast();
 
   const [isSignIn, setIsSignIn] = useState(true);
   const [loading, setLoading] = useState(false);
 
   const signIn = async () => {
-    if (emailRef.current.value === "" || passwordRef.current.value === "") {
-      return toast({
-        description: "All fields required.",
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-        position: "bottom-right",
-      });
-    }
+    // if (emailRef.current.value === "" || passwordRef.current.value === "") {
+    //   return toast({
+    //     description: "All fields required.",
+    //     status: "error",
+    //     duration: 9000,
+    //     isClosable: true,
+    //     position: "bottom-right",
+    //   });
+    // }
 
     setLoading(true);
 
     try {
       await signin(emailRef.current.value, passwordRef.current.value);
     } catch {
-      toast({
-        description: `${error.message}`,
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-        position: "bottom-right",
-      });
+      // toast({
+      //   description: `${error.message}`,
+      //   status: "error",
+      //   duration: 9000,
+      //   isClosable: true,
+      //   position: "bottom-right",
+      // });
       setLoading(false);
     }
   };
 
   const signUp = async () => {
-    if (
-      usernameRef.current.value === "" ||
-      emailRef.current.value === "" ||
-      passwordRef.current.value === ""
-    ) {
-      return toast({
-        description: "All fields required.",
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-        position: "bottom-right",
-      });
-    }
+    // if (
+    //   usernameRef.current.value === "" ||
+    //   emailRef.current.value === "" ||
+    //   passwordRef.current.value === ""
+    // ) {
+    //   return toast({
+    //     description: "All fields required.",
+    //     status: "error",
+    //     duration: 9000,
+    //     isClosable: true,
+    //     position: "bottom-right",
+    //   });
+    // }
 
-    if (usernameRef.current.value.includes(" ")) {
-      return toast({
-        description: "Username cannot have spaces.",
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-        position: "bottom-right",
-      });
-    }
+    // if (usernameRef.current.value.includes(" ")) {
+    //   return toast({
+    //     description: "Username cannot have spaces.",
+    //     status: "error",
+    //     duration: 9000,
+    //     isClosable: true,
+    //     position: "bottom-right",
+    //   });
+    // }
 
     setLoading(true);
 
@@ -90,13 +90,13 @@ const AuthPage = () => {
         passwordRef.current.value
       );
     } catch {
-      toast({
-        description: `${error.message}`,
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-        position: "bottom-right",
-      });
+      // toast({
+      //   description: `${error.message}`,
+      //   status: "error",
+      //   duration: 9000,
+      //   isClosable: true,
+      //   position: "bottom-right",
+      // });
 
       setLoading(false);
     }
