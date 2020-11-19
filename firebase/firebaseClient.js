@@ -17,6 +17,6 @@ export const functions = firebase.functions();
 
 //development only
 // firestore.useEmulator("localhost", 8080);
-functions.useEmulator("localhost", 5001);
+// functions.useEmulator("localhost", 5001);
 
 export default firebase;

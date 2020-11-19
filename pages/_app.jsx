@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Head from "next/head";
 import Provider from "../contexts/Provider";
 import initAuth from "../firebase/initAuth";
+import { ChakraProvider } from "@chakra-ui/react";
 
 import "../styles/globals.css";
 
@@ -25,7 +26,9 @@ const MyApp = ({ Component, pageProps }) => {
       </Head>
 
       <Provider>
-        <Component {...pageProps} />
+        <ChakraProvider>
+          <Component {...pageProps} />
+        </ChakraProvider>
       </Provider>
     </>
   );

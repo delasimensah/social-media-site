@@ -4,6 +4,9 @@ import Fade from "react-reveal/Fade";
 import { AuthAction, withAuthUser, withAuthUserSSR } from "next-firebase-auth";
 import { authState } from "../contexts/AuthContext";
 
+//chakra ui
+import { useToast } from "@chakra-ui/react";
+
 import {
   IoMailOutline,
   IoPersonCircleOutline,
@@ -17,39 +20,84 @@ import FormInput from "../components/FormInput";
 
 const AuthPage = () => {
   const { signin, signup } = authState();
-  const nameRef = useRef();
+  const usernameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
+
+  const toast = useToast();
 
   const [isSignIn, setIsSignIn] = useState(true);
   const [loading, setLoading] = useState(false);
 
   const signIn = async () => {
+    if (emailRef.current.value === "" || passwordRef.current.value === "") {
+      return toast({
+        description: "All fields required.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "bottom-right",
+      });
+    }
+
     setLoading(true);
 
     try {
       await signin(emailRef.current.value, passwordRef.current.value);
-
-      setLoading(false);
     } catch {
-      console.log("error");
+      toast({
+        description: `${error.message}`,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "bottom-right",
+      });
       setLoading(false);
     }
   };
 
   const signUp = async () => {
+    if (
+      usernameRef.current.value === "" ||
+      emailRef.current.value === "" ||
+      passwordRef.current.value === ""
+    ) {
+      return toast({
+        description: "All fields required.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "bottom-right",
+      });
+    }
+
+    if (usernameRef.current.value.includes(" ")) {
+      return toast({
+        description: "Username cannot have spaces.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "bottom-right",
+      });
+    }
+
     setLoading(true);
 
     try {
       await signup(
-        nameRef.current.value,
+        usernameRef.current.value,
         emailRef.current.value,
         passwordRef.current.value
       );
-
-      setLoading(false);
     } catch {
-      console.log("error");
+      toast({
+        description: `${error.message}`,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "bottom-right",
+      });
+
       setLoading(false);
     }
   };
@@ -90,7 +138,7 @@ const AuthPage = () => {
                     type="text"
                     placeholder="Username"
                     icon={<IoPersonCircleOutline className="form-icon" />}
-                    val={nameRef}
+                    val={usernameRef}
                   />
                 )}
                 <FormInput

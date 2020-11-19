@@ -23,4 +23,5 @@ module.exports = {
       strategy: "class",
     }),
   ],
+  important: true,
 };
