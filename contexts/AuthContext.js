@@ -12,7 +12,7 @@ const devUrl =
   "http://localhost:5001/social-media-93a8a/us-central1/api/createUser";
 
 const url =
-  "http://localhost:5001/social-media-93a8a/us-central1/api/createUser";
+  "https://us-central1-social-media-93a8a.cloudfunctions.net/api/createUser";
 
 export const AuthProvider = ({ children }) => {
   const signin = async (email, password) => {
