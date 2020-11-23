@@ -12,8 +12,8 @@ if (!firebase.apps.length) {
 }
 
 export const auth = firebase.auth();
-export const firestore = firebase.firestore();
-export const functions = firebase.functions();
+// export const firestore = firebase.firestore();
+// export const functions = firebase.functions();
 
 //development only
 firestore.useEmulator("localhost", 8080);
