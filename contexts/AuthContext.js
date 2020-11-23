@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
     const token = await user.getIdToken();
 
     await axios.post(
-      url,
+      devUrl,
       {
         username,
         email,

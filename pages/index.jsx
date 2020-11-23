@@ -4,9 +4,7 @@ import {
   withAuthUser,
   AuthAction,
   withAuthUserTokenSSR,
-  useAuthUser,
 } from "next-firebase-auth";
-import { auth } from "../firebase/firebaseClient";
 
 //components
 import Layout from "../components/Layout";
@@ -16,9 +14,6 @@ import ImageModal from "../components/ImageModal";
 import Suggestions from "../components/Suggestions";
 
 const HomePage = () => {
-  const AuthUser = useAuthUser();
-  console.log(AuthUser.displayName);
-
   return (
     <Layout>
       <div className="container grid grid-cols-1 lg:grid-cols-[2fr,1fr] gap-10">
