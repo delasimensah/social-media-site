@@ -23,6 +23,7 @@ const AuthPage = () => {
   const usernameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
+  const [show, setShow] = useState(true);
 
   // const toast = useToast();
 
