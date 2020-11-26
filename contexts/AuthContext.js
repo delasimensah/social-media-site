@@ -30,18 +30,22 @@ export const AuthProvider = ({ children }) => {
 
     const token = await user.getIdToken();
 
-    await axios.post(
-      url,
-      {
-        username,
-        email,
-      },
-      {
-        headers: {
-          Authorization: `${token}`,
+    try {
+      await axios.post(
+        url,
+        {
+          username,
+          email,
         },
-      }
-    );
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      );
+    } catch {
+      throw new Error("Something went wrong. Try again");
+    }
   };
 
   const signout = async () => {

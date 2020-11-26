@@ -4,8 +4,9 @@ import Fade from "react-reveal/Fade";
 import { AuthAction, withAuthUser, withAuthUserSSR } from "next-firebase-auth";
 import { authState } from "../contexts/AuthContext";
 
-//chakra ui
-// import { useToast } from "@chakra-ui/react";
+//mui
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 
 import {
   IoMailOutline,
@@ -23,64 +24,60 @@ const AuthPage = () => {
   const usernameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
-  const [show, setShow] = useState(true);
-
-  // const toast = useToast();
 
   const [isSignIn, setIsSignIn] = useState(true);
   const [loading, setLoading] = useState(false);
 
+  const [open, setOpen] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   const signIn = async () => {
-    // if (emailRef.current.value === "" || passwordRef.current.value === "") {
-    //   return toast({
-    //     description: "All fields required.",
-    //     status: "error",
-    //     duration: 9000,
-    //     isClosable: true,
-    //     position: "bottom-right",
-    //   });
-    // }
+    if (emailRef.current.value === "" || passwordRef.current.value === "") {
+      setError("All fields required");
+      handleClick();
+      return;
+    }
 
     setLoading(true);
 
     try {
       await signin(emailRef.current.value, passwordRef.current.value);
     } catch {
-      // toast({
-      //   description: `${error.message}`,
-      //   status: "error",
-      //   duration: 9000,
-      //   isClosable: true,
-      //   position: "bottom-right",
-      // });
+      setError(`${error.message}`);
+      handleClick();
       setLoading(false);
     }
   };
 
   const signUp = async () => {
-    // if (
-    //   usernameRef.current.value === "" ||
-    //   emailRef.current.value === "" ||
-    //   passwordRef.current.value === ""
-    // ) {
-    //   return toast({
-    //     description: "All fields required.",
-    //     status: "error",
-    //     duration: 9000,
-    //     isClosable: true,
-    //     position: "bottom-right",
-    //   });
-    // }
+    if (
+      usernameRef.current.value === "" ||
+      emailRef.current.value === "" ||
+      passwordRef.current.value === ""
+    ) {
+      setError("All fields required.");
+      handleClick();
 
-    // if (usernameRef.current.value.includes(" ")) {
-    //   return toast({
-    //     description: "Username cannot have spaces.",
-    //     status: "error",
-    //     duration: 9000,
-    //     isClosable: true,
-    //     position: "bottom-right",
-    //   });
-    // }
+      return;
+    }
+
+    if (usernameRef.current.value.includes(" ")) {
+      setError("Username cannot have spaces.");
+      handleClick();
+      return;
+    }
 
     setLoading(true);
 
@@ -90,14 +87,9 @@ const AuthPage = () => {
         emailRef.current.value,
         passwordRef.current.value
       );
-    } catch {
-      // toast({
-      //   description: `${error.message}`,
-      //   status: "error",
-      //   duration: 9000,
-      //   isClosable: true,
-      //   position: "bottom-right",
-      // });
+    } catch (error) {
+      setError(error.message);
+      handleClick();
 
       setLoading(false);
     }
@@ -105,6 +97,20 @@ const AuthPage = () => {
 
   return (
     <div className="bg-white dark:bg-dark page-default">
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        open={open}
+        autoHideDuration={2000}
+        onClose={handleClose}
+      >
+        <MuiAlert onClose={handleClose} severity="error" variant="filled">
+          {error}
+        </MuiAlert>
+      </Snackbar>
+
       <div className="grid lg:h-screen lg:grid-cols-2">
         <div className="relative flex items-center justify-center h-screen bg-cover bg-friends-sm md:bg-friends xl:friends-lg lg:h-full">
           <div className="absolute top-0 left-0 z-10 w-full h-full bg-black/40"></div>

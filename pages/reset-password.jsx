@@ -4,6 +4,10 @@ import Fade from "react-reveal/Fade";
 import { AuthAction, withAuthUser, withAuthUserSSR } from "next-firebase-auth";
 import { authState } from "../contexts/AuthContext";
 
+//mui
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+
 import {
   IoMailOutline,
   IoPersonCircleOutline,
@@ -21,14 +25,39 @@ const AuthPage = () => {
 
   const [loading, setLoading] = useState(false);
 
+  const [open, setOpen] = useState(false);
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   const reset = async () => {
+    if (emailRef.current.value === "") {
+      setError("Email is required");
+      handleClick();
+      return;
+    }
     setLoading(true);
     try {
       await resetPassword(emailRef.current.value);
 
+      setMessage("Check your email for further instructions");
+      handleClick();
+
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      setError(error.message);
+      handleClick();
 
       setLoading(false);
     }
@@ -36,6 +65,38 @@ const AuthPage = () => {
 
   return (
     <div className="bg-white dark:bg-dark page-default">
+      {error && (
+        <Snackbar
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right",
+          }}
+          open={open}
+          autoHideDuration={2000}
+          onClose={handleClose}
+        >
+          <MuiAlert onClose={handleClose} severity="error" variant="filled">
+            {error}
+          </MuiAlert>
+        </Snackbar>
+      )}
+
+      {message && (
+        <Snackbar
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right",
+          }}
+          open={open}
+          autoHideDuration={2000}
+          onClose={handleClose}
+        >
+          <MuiAlert onClose={handleClose} severity="success" variant="filled">
+            {message}
+          </MuiAlert>
+        </Snackbar>
+      )}
+
       <div className="grid lg:h-screen lg:grid-cols-2">
         <div className="relative flex items-center justify-center h-screen bg-cover bg-friends-sm md:bg-friends xl:friends-lg lg:h-full">
           <div className="absolute top-0 left-0 z-10 w-full h-full bg-black/40"></div>
