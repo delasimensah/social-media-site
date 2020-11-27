@@ -8,7 +8,7 @@ export const authState = () => {
   return useContext(AuthContext);
 };
 
-const devUrl =
+const devurl =
   "http://localhost:5001/social-media-93a8a/us-central1/api/createUser";
 
 const url =

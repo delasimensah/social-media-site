@@ -4,16 +4,20 @@ import { IoLocationOutline, IoCalendarOutline } from "react-icons/io5";
 import { useRouter } from "next/router";
 import { firestore } from "../../firebase/firebaseClient";
 import { format } from "timeago.js";
+import { withAuthUser, useAuthUser } from "next-firebase-auth";
+
+//mui
 
 //components
 import Layout from "../../components/Layout";
 import CreatePostCard from "../../components/CreatePostCard";
 import Feed from "../../components/Feed";
-import ImageModal from "../../components/ImageModal";
 import Suggestions from "../../components/Suggestions";
-import Skeleton from "../../components/Skeletons/Skeleton";
+import ProfilePageSkeleton from "../../components/Skeletons/ProfilePageSkeleton";
 
 const ProfilePage = () => {
+  const AuthUser = useAuthUser();
+
   const router = useRouter();
   const { id } = router.query;
 
@@ -52,48 +56,46 @@ const ProfilePage = () => {
   return (
     <Layout>
       <div className="container">
-        <div className="relative">
-          <div className="h-40 overflow-hidden rounded-md md:h-60">
-            <Skeleton isLoaded={!fetching} className="h-40 md:h-60">
-              <img
-                src={userInfo?.coverPhoto}
-                alt=""
-                className="object-center w-full"
-              />
-            </Skeleton>
-          </div>
+        {fetching ? (
+          <ProfilePageSkeleton />
+        ) : (
+          <div>
+            <div className="relative">
+              <div className="h-40 overflow-hidden bg-gray-400 rounded-md md:h-60">
+                <img
+                  src={userInfo?.coverPhoto}
+                  alt=""
+                  className="w-full h-full"
+                />
+              </div>
 
-          <div className="absolute w-22 h-22 overflow-hidden border-4 border-[#f4f4f4] dark:border-darklight rounded-full -bottom-10 md:w-32 md:h-32 lg:-bottom-14 lg:left-10 left-5">
-            <Skeleton isLoaded={!fetching} className="w-40 h-40 ">
-              <img
-                src={userInfo?.profileImage}
-                alt=""
-                className="w-full h-full"
-              />
-            </Skeleton>
-          </div>
-        </div>
+              <div className="absolute w-24 h-24 overflow-hidden border-4 border-[#f4f4f4] dark:border-darklight rounded-full -bottom-10 md:w-32 md:h-32 lg:-bottom-14 lg:left-10 left-5 bg-gray-400">
+                <img
+                  src={userInfo?.profileImage}
+                  alt=""
+                  className="w-full h-full"
+                />
+              </div>
+            </div>
 
-        <div className="">
-          <div className="flex justify-end pt-5">
-            <button className="px-3 py-1 text-purple-600 border-2 border-purple-600 rounded-full md:px-5 md:py-2">
-              Edit Profile
-            </button>
-          </div>
+            {AuthUser.id ? (
+              <div className="flex justify-end pt-5">
+                <button className="px-3 py-1 text-purple-600 border-2 border-purple-600 rounded-full md:px-5 md:py-2">
+                  Edit Profile
+                </button>
+              </div>
+            ) : (
+              <div className="flex justify-end h-10 mt-5 md:h-14"></div>
+            )}
 
-          <div className="grid gap-5 px-5 pb-10 md:grid-cols-2">
-            <div className="space-y-3">
-              <Skeleton isLoaded={!fetching} className="w-40 h-4">
+            <div className="grid gap-5 px-5 pb-10 md:grid-cols-2">
+              <div className="space-y-3">
                 <h1 className="capitalize dark:text-white md:text-lg ">
                   {userInfo?.username}
                 </h1>
-              </Skeleton>
 
-              <Skeleton isLoaded={!fetching} className="h-4 w-72">
                 <p className="text-sm text-color">{userInfo?.bio}</p>
-              </Skeleton>
 
-              <Skeleton isLoaded={!fetching} className="h-4 w-60">
                 <div className="flex items-center space-x-4">
                   <div className="flex items-center space-x-2">
                     <IoLocationOutline className="text-color" />
@@ -109,10 +111,8 @@ const ProfilePage = () => {
                     </p>
                   </div>
                 </div>
-              </Skeleton>
-            </div>
+              </div>
 
-            <Skeleton isLoaded={!fetching} className="h-4 w-60">
               <div className="flex items-center space-x-5 md:justify-center">
                 {/* <div className="text-center">
                 <p className="text-lg dark:text-white">Posts</p>
@@ -129,25 +129,23 @@ const ProfilePage = () => {
                   <p className="dark:text-white">Following</p>
                 </div>
               </div>
-            </Skeleton>
+            </div>
+          </div>
+        )}
+
+        <div className="grid grid-cols-1 lg:grid-cols-[2fr,1fr] gap-10">
+          <div className="space-y-5">
+            <CreatePostCard />
+            <Feed posts={posts} />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-[2fr,1fr] gap-10">
-            <div className="space-y-5">
-              <CreatePostCard />
-              <Feed posts={posts} />
-            </div>
-
-            <div className="hidden space-y-10 overflow-hidden lg:block">
-              <Suggestions />
-            </div>
+          <div className="hidden space-y-10 overflow-hidden lg:block">
+            <Suggestions />
           </div>
         </div>
       </div>
-
-      <ImageModal />
     </Layout>
   );
 };
 
-export default ProfilePage;
+export default withAuthUser()(ProfilePage);

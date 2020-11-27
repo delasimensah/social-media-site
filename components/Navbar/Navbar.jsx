@@ -16,8 +16,11 @@ import DropdownMenu from "./DropdownMenu";
 import SearchInput from "./SearchInput";
 import Logo from "../Logo";
 import Indicator from "./Indicator";
+import { withAuthUser, useAuthUser } from "next-firebase-auth";
 
 const Navbar = () => {
+  const AuthUser = useAuthUser();
+
   return (
     <div className="fixed top-0 left-0 z-10 flex items-center justify-between w-screen px-3 py-5 bg-white shadow-md md:py-3 md:justify-start md:px-16 lg:px-40 dark:bg-dark">
       <Link href="/">
@@ -27,35 +30,43 @@ const Navbar = () => {
       </Link>
 
       <div className="items-center justify-center flex-grow hidden md:flex">
-        <SearchInput />
+        {AuthUser.id && <SearchInput />}
       </div>
 
-      <div className="flex items-center space-x-6">
-        <MenuLink link="/" icon={<IoHomeOutline className="nav-icon" />} />
+      {AuthUser.id ? (
+        <div className="flex items-center space-x-6">
+          <MenuLink link="/" icon={<IoHomeOutline className="nav-icon" />} />
 
-        <div className="relative">
-          <Indicator />
-          <MenuLink
-            link="/chat"
-            icon={<IoChatbubblesOutline className="nav-icon" />}
-          />
+          <div className="relative">
+            <Indicator />
+            <MenuLink
+              link="/chat"
+              icon={<IoChatbubblesOutline className="nav-icon" />}
+            />
+          </div>
+
+          <div className="relative">
+            <Indicator className="top-[4px]" />
+            <Dropdown
+              icon={<IoNotificationsOutline className="nav-icon " />}
+              menu={<Notifications />}
+              w="w-72 lg:w-96"
+            />
+          </div>
+
+          <ColorModeButton />
+
+          <Dropdown image={<ProfileImg />} menu={<DropdownMenu />} w="w-52" />
         </div>
-
-        <div className="relative">
-          <Indicator className="top-[4px]" />
-          <Dropdown
-            icon={<IoNotificationsOutline className="nav-icon " />}
-            menu={<Notifications />}
-            w="w-72 lg:w-96"
-          />
+      ) : (
+        <div>
+          <Link href="/auth">
+            <a className="text-purple-600 capitalize">sign in</a>
+          </Link>
         </div>
-
-        <ColorModeButton />
-
-        <Dropdown image={<ProfileImg />} menu={<DropdownMenu />} w="w-52" />
-      </div>
+      )}
     </div>
   );
 };
 
-export default Navbar;
+export default withAuthUser()(Navbar);
