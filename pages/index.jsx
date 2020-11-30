@@ -10,7 +10,6 @@ import {
 import Layout from "../components/Layout";
 import CreatePostCard from "../components/CreatePostCard";
 import Feed from "../components/Feed";
-import ImageModal from "../components/ImageModal";
 import Suggestions from "../components/Suggestions";
 
 const HomePage = () => {
@@ -26,8 +25,6 @@ const HomePage = () => {
           <Suggestions />
         </div>
       </div>
-
-      <ImageModal />
     </Layout>
   );
 };

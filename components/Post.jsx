@@ -8,14 +8,13 @@ import {
 } from "react-icons/io5";
 import Link from "next/link";
 import { format } from "timeago.js";
-import { imageModalState } from "../contexts/ImageModalContext";
 
 //components
 import Dropdown from "./Navbar/Dropdown";
 import PostDropdown from "./PostDropdown";
+import PostImage from "./PostImage";
 
 const Post = ({ post }) => {
-  const { setOpen, setImg } = imageModalState();
   const [liked, setLiked] = useState(false);
 
   return (
@@ -63,24 +62,7 @@ const Post = ({ post }) => {
           } h-60 md:h-96`}
         >
           {post.images.map((img, idx) => {
-            return (
-              <div
-                key={idx}
-                className={`${
-                  post.images.length === 3 && "first:row-span-2"
-                } overflow-hidden rounded-md cursor-pointer bg-gray-700/20`}
-              >
-                <img
-                  src={img}
-                  alt=""
-                  className="object-cover object-top w-full h-full"
-                  onClick={() => {
-                    setOpen(true);
-                    setImg(img);
-                  }}
-                />
-              </div>
-            );
+            return <PostImage key={idx} images={post.images} img={img} />;
           })}
         </div>
       )}
