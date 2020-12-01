@@ -4,6 +4,7 @@ import Provider from "../contexts/Provider";
 import initAuth from "../firebase/initAuth";
 
 import "../styles/globals.css";
+import "react-awesome-lightbox/build/style.css";
 
 initAuth();
 

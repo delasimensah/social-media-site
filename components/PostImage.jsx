@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import Lightbox from "react-awesome-lightbox";
 
 //mui
-import Dialog from "@material-ui/core/Dialog";
+// import Dialog from "@material-ui/core/Dialog";
 
-const PostImage = ({ images, img }) => {
+const PostImage = ({ images, img, idx }) => {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -29,11 +30,20 @@ const PostImage = ({ images, img }) => {
         />
       </div>
 
-      <Dialog onClose={handleClose} aria-labelledby="image-dialog" open={open}>
+      {open && (
+        <Lightbox
+          image={images.length === 1 && img}
+          images={images.length > 1 && images}
+          startIndex={idx}
+          onClose={handleClose}
+        ></Lightbox>
+      )}
+
+      {/* <Dialog onClose={handleClose} aria-labelledby="image-dialog" open={open}>
         <div className="max-w-md mx-auto overflow-hidden rounded">
           <img src={img} alt="post image" className="w-full h-full" />
         </div>
-      </Dialog>
+      </Dialog> */}
     </>
   );
 };

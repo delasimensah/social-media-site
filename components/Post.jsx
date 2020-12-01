@@ -62,7 +62,9 @@ const Post = ({ post }) => {
           } h-60 md:h-96`}
         >
           {post.images.map((img, idx) => {
-            return <PostImage key={idx} images={post.images} img={img} />;
+            return (
+              <PostImage key={idx} idx={idx} images={post.images} img={img} />
+            );
           })}
         </div>
       )}
