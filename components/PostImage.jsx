@@ -1,11 +1,20 @@
 import React, { useState } from "react";
-import Lightbox from "react-awesome-lightbox";
+// import Lightbox from "react-awesome-lightbox";
+import Lightbox from "react-spring-lightbox";
 
 //mui
-// import Dialog from "@material-ui/core/Dialog";
+import Dialog from "@material-ui/core/Dialog";
 
 const PostImage = ({ images, img, idx }) => {
   const [open, setOpen] = useState(false);
+  const [currentImageIndex, setCurrentIndex] = useState(idx);
+
+  const gotoPrevious = () =>
+    currentImageIndex > 0 && setCurrentIndex(currentImageIndex - 1);
+
+  const gotoNext = () =>
+    currentImageIndex + 1 < images.length &&
+    setCurrentIndex(currentImageIndex + 1);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -15,6 +24,13 @@ const PostImage = ({ images, img, idx }) => {
     setOpen(false);
   };
 
+  const newImages = images.map((img) => {
+    return {
+      src: img,
+      loading: "lazy",
+      alt: "post image",
+    };
+  });
   return (
     <>
       <div
@@ -30,20 +46,15 @@ const PostImage = ({ images, img, idx }) => {
         />
       </div>
 
-      {open && (
-        <Lightbox
-          image={images.length === 1 && img}
-          images={images.length > 1 && images}
-          startIndex={idx}
-          onClose={handleClose}
-        ></Lightbox>
-      )}
-
-      {/* <Dialog onClose={handleClose} aria-labelledby="image-dialog" open={open}>
-        <div className="max-w-md mx-auto overflow-hidden rounded">
-          <img src={img} alt="post image" className="w-full h-full" />
-        </div>
-      </Dialog> */}
+      <Lightbox
+        isOpen={open}
+        images={newImages}
+        onClose={handleClose}
+        currentIndex={currentImageIndex}
+        onPrev={gotoPrevious}
+        onNext={gotoNext}
+        className="bg-black/60"
+      />
     </>
   );
 };

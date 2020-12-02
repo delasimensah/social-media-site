@@ -54,8 +54,8 @@ const AuthPage = () => {
 
     try {
       await signin(emailRef.current.value, passwordRef.current.value);
-    } catch {
-      setError(`${error.message}`);
+    } catch (error) {
+      setError(error.message);
       handleClick();
       setLoading(false);
     }
