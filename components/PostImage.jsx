@@ -1,20 +1,11 @@
 import React, { useState } from "react";
-// import Lightbox from "react-awesome-lightbox";
-import Lightbox from "react-spring-lightbox";
+import Lightbox from "react-awesome-lightbox";
 
 //mui
 import Dialog from "@material-ui/core/Dialog";
 
 const PostImage = ({ images, img, idx }) => {
   const [open, setOpen] = useState(false);
-  const [currentImageIndex, setCurrentIndex] = useState(idx);
-
-  const gotoPrevious = () =>
-    currentImageIndex > 0 && setCurrentIndex(currentImageIndex - 1);
-
-  const gotoNext = () =>
-    currentImageIndex + 1 < images.length &&
-    setCurrentIndex(currentImageIndex + 1);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -24,13 +15,6 @@ const PostImage = ({ images, img, idx }) => {
     setOpen(false);
   };
 
-  const newImages = images.map((img) => {
-    return {
-      src: img,
-      loading: "lazy",
-      alt: "post image",
-    };
-  });
   return (
     <>
       <div
@@ -46,15 +30,19 @@ const PostImage = ({ images, img, idx }) => {
         />
       </div>
 
-      <Lightbox
-        isOpen={open}
-        images={newImages}
-        onClose={handleClose}
-        currentIndex={currentImageIndex}
-        onPrev={gotoPrevious}
-        onNext={gotoNext}
-        className="bg-black/60"
-      />
+      <Dialog open={open} onClose={handleClose}>
+        {open && (
+          <Lightbox
+            image={images.length === 1 && img}
+            images={images.length > 1 && images}
+            onClose={handleClose}
+            allowZoom={false}
+            allowRotate={false}
+            allowReset={false}
+            startIndex={idx}
+          />
+        )}
+      </Dialog>
     </>
   );
 };
