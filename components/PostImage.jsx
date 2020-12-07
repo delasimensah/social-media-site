@@ -31,7 +31,6 @@ const PostImage = ({ images, img, idx }) => {
       </div>
 
       <Dialog open={open} onClose={handleClose}>
-        {open && (
           <Lightbox
             image={images.length === 1 && img}
             images={images.length > 1 && images}
@@ -40,8 +39,7 @@ const PostImage = ({ images, img, idx }) => {
             allowRotate={false}
             allowReset={false}
             startIndex={idx}
-          />
-        )}
+          /> 
       </Dialog>
     </>
   );
