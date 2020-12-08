@@ -18,6 +18,7 @@ const HomePage = () => {
       <div className="container grid grid-cols-1 lg:grid-cols-[2fr,1fr] gap-10">
         <div className="space-y-5">
           <CreatePostCard />
+
           <Feed posts={posts} />
         </div>
 
