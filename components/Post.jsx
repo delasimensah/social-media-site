@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Image from "next/image";
 import {
   IoEllipsisVertical,
   IoChatbubbleOutline,
@@ -20,23 +19,21 @@ const Post = ({ post }) => {
   return (
     <div className="bg-white dark:bg-[#202836] rounded-md shadow-md p-5 space-y-3">
       <div className="flex items-center space-x-2">
-        <div className="w-10 h-10 md:w-12 md:h-14">
+        <div className="w-10 h-10 md:w-12 md:h-12">
           <Link href={`/profile/${post.name}`}>
             <a>
-              <Image
+              <img
                 src={post.profileImage}
                 alt="profile picture"
-                width={100}
-                height={100}
-                className="rounded-full"
+                className="w-full h-full rounded-full"
               />
             </a>
           </Link>
         </div>
 
         <div className="flex-grow">
-          <Link href={`/profile/${post.name}`}>
-            <a className="dark:text-gray-300 text-[14px]">{post.name}</a>
+          <Link href={`/profile/${post.username}`}>
+            <a className="dark:text-gray-300 text-[14px]">{post.username}</a>
           </Link>
 
           <p className="text-[12px] text-gray-400">{format(post.createdAt)}</p>
@@ -79,57 +76,37 @@ const Post = ({ post }) => {
             )}
           </button>
 
-          <span className="dark:text-gray-400">12.6k</span>
+          <span className="dark:text-gray-400">{post.likes.length}</span>
 
-          <div className="flex -space-x-1 overflow-hidden">
-            <img
-              className="inline-block w-6 h-6 rounded-full ring-2 ring-white dark:ring-[#202836]"
-              src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-              alt=""
-            />
-            <img
-              className="inline-block w-6 h-6 rounded-full ring-2 ring-white dark:ring-[#202836]"
-              src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-              alt=""
-            />
-            <img
-              className="inline-block w-6 h-6 rounded-full ring-2 ring-white dark:ring-[#202836]"
-              src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
-              alt=""
-            />
-            <img
-              className="inline-block w-6 h-6 rounded-full ring-2 ring-white dark:ring-[#202836]"
-              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-              alt=""
-            />
-          </div>
+          {post.likes.length > 0 && (
+            <div className="flex -space-x-1 overflow-hidden">
+              {post.likes.map((like, idx) => (
+                <img
+                  key={idx}
+                  className="inline-block w-6 h-6 rounded-full ring-2 ring-white dark:ring-[#202836]"
+                  src={like.userImage}
+                  alt=""
+                />
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="flex items-center space-x-2">
           <IoChatbubbleOutline className="cursor-pointer w-7 h-7 dark:text-gray-400" />
-          <span className="dark:text-gray-400">10k</span>
-          <div className="flex -space-x-1 overflow-hidden">
-            <img
-              className="inline-block w-6 h-6 rounded-full ring-2 ring-white dark:ring-[#202836]"
-              src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-              alt=""
-            />
-            <img
-              className="inline-block w-6 h-6 rounded-full ring-2 ring-white dark:ring-[#202836]"
-              src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-              alt=""
-            />
-            <img
-              className="inline-block w-6 h-6 rounded-full ring-2 ring-white dark:ring-[#202836]"
-              src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
-              alt=""
-            />
-            <img
-              className="inline-block w-6 h-6 rounded-full ring-2 ring-white dark:ring-[#202836]"
-              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-              alt=""
-            />
-          </div>
+          <span className="dark:text-gray-400">{post.comments.length}</span>
+          {post.comments.length > 0 && (
+            <div className="flex -space-x-1 overflow-hidden">
+              {post.comments.map((comment, idx) => (
+                <img
+                  key={idx}
+                  className="inline-block w-6 h-6 rounded-full ring-2 ring-white dark:ring-[#202836]"
+                  src={comment.userImage}
+                  alt=""
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -59,7 +59,7 @@ const ProfilePage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-[2fr,1fr] gap-10">
           <div className="space-y-5">
             <CreatePostCard />
-            <Feed posts={posts} />
+            {/* <Feed posts={posts} /> */}
           </div>
 
           <div className="hidden space-y-10 overflow-hidden lg:block">

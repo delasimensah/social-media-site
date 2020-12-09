@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import posts from "../utils/posts";
 import {
   withAuthUser,
   AuthAction,
   withAuthUserTokenSSR,
 } from "next-firebase-auth";
+import { firestore } from "../firebase/firebaseClient";
 
 //components
 import Layout from "../components/Layout";
@@ -13,13 +14,37 @@ import Feed from "../components/Feed";
 import Suggestions from "../components/Suggestions";
 
 const HomePage = () => {
+  const [loading, setLoading] = useState(false);
+  const [feed, setFeed] = useState([]);
+
+  useEffect(() => {
+    const unsubscribe = firestore
+      .collection("posts")
+      .orderBy("createdAt", "desc")
+      .limit(50)
+      .onSnapshot((snapshot) => {
+        const data = snapshot.docs.map((doc) => {
+          return {
+            id: doc.id,
+            ...doc.data(),
+          };
+        });
+
+        setFeed(data);
+      });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   return (
     <Layout>
       <div className="container grid grid-cols-1 lg:grid-cols-[2fr,1fr] gap-10">
         <div className="space-y-5">
           <CreatePostCard />
 
-          <Feed posts={posts} />
+          <Feed posts={feed} />
         </div>
 
         <div className="hidden space-y-10 overflow-hidden lg:block">

@@ -2,7 +2,7 @@ const posts = [
   {
     id: 1,
     profileImage: "/me.jpg",
-    name: "Delasi",
+    username: "Delasi",
     text: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod id atque a illum aut ullam libero ipsa, inventore dignissimos maxime!`,
     createdAt: "Fri Jun 25 2021 14:36:06",
     images: [
@@ -15,7 +15,7 @@ const posts = [
   {
     id: 2,
     profileImage: "/1.jpg",
-    name: "Breezairr",
+    username: "Breezairr",
     text: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod id atque a illum aut ullam libero ipsa, inventore dignissimos maxime!`,
     createdAt: "Fri Jun 25 2021 14:36:06",
     images: [
@@ -27,7 +27,7 @@ const posts = [
   {
     id: 3,
     profileImage: "/2.jpg",
-    name: "Rondo",
+    username: "Rondo",
     text: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod id atque a illum aut ullam libero ipsa, inventore dignissimos maxime!`,
     createdAt: "Fri Jun 25 2021 14:36:06",
     images: [
@@ -37,7 +37,7 @@ const posts = [
   {
     id: 4,
     profileImage: "/3.jpg",
-    name: "Oti",
+    username: "Oti",
     text: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod id atque a illum aut ullam libero ipsa, inventore dignissimos maxime!`,
     createdAt: "Fri Jun 25 2021 14:36:06",
     images: [
@@ -48,7 +48,7 @@ const posts = [
   {
     id: 5,
     profileImage: "/4.jpg",
-    name: "Phil",
+    username: "Phil",
     text: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod id atque a illum aut ullam libero ipsa, inventore dignissimos maxime!`,
     createdAt: "Fri Jun 25 2021 14:36:06",
     images: [],

@@ -5,20 +5,56 @@ import {
   IoPersonOutline,
 } from "react-icons/io5";
 import { withAuthUser, useAuthUser } from "next-firebase-auth";
+import { storage, firestore } from "../firebase/firebaseClient";
+
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 const CreatePostCard = () => {
   const AuthUser = useAuthUser();
   const postRef = useRef();
   const [files, setFiles] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const createPost = async () => {
-    //TODO if images upload images to storage bucket
-    //TODO after image upload get url add to post data and upload to firestore
-    files.map((file) => console.log(file));
-    console.log(postRef.current.value);
+    setLoading(true);
 
-    postRef.current.value = "";
-    setFiles([]);
+    try {
+      //if images upload images and return image urls
+      const images = await Promise.all(
+        files.map(async (file) => {
+          const ref = storage.ref(
+            `${AuthUser.displayName}/${new Date()}_${file.name}`
+          );
+
+          const snapshot = await ref.put(file);
+
+          return snapshot.ref.getDownloadURL();
+        })
+      );
+
+      //structure for a post
+      const post = {
+        profileImage: AuthUser.photoURL,
+        username: AuthUser.displayName,
+        text: postRef.current.value,
+        createdAt: new Date(),
+        images,
+        likes: [],
+        comments: [],
+      };
+
+      const ref = firestore.collection(`posts`);
+
+      //add post to database
+      await ref.add(post);
+
+      postRef.current.value = "";
+      setFiles([]);
+      setLoading(false);
+    } catch (error) {
+      console.log(error.message);
+      setLoading(false);
+    }
   };
 
   return (
@@ -91,6 +127,8 @@ const CreatePostCard = () => {
               Post
             </button>
           </div>
+
+          {loading && <LinearProgress />}
         </div>
       )}
     </>

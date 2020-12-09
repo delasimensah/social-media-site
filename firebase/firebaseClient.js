@@ -2,6 +2,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/functions";
+import "firebase/storage";
 
 if (!firebase.apps.length) {
   firebase.initializeApp({
@@ -17,7 +18,7 @@ if (!firebase.apps.length) {
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 export const functions = firebase.functions();
-// export const storage = firebase.storage;
+export const storage = firebase.storage();
 
 //development only
 // firestore.useEmulator("localhost", 8080);
