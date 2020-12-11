@@ -18,7 +18,6 @@ import {
 //components
 import Logo from "../components/Logo";
 import FormInput from "../components/FormInput";
-import Loader from "../components/Loader";
 
 const AuthPage = () => {
   const { signin, signup } = authState();
@@ -218,6 +217,4 @@ export const getServerSideProps = withAuthUserSSR({
 //needed for client-side routing when authenticated
 export default withAuthUser({
   whenAuthed: AuthAction.REDIRECT_TO_APP,
-  whenUnauthedBeforeInit: AuthAction.SHOW_LOADER,
-  LoaderComponent: Loader,
 })(AuthPage);

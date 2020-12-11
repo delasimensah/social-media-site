@@ -31,15 +31,14 @@ const PostImage = ({ images, img, idx }) => {
       </div>
 
       <Dialog open={open} onClose={handleClose}>
-          <Lightbox
-            image={images.length === 1 && img}
-            images={images.length > 1 && images}
-            onClose={handleClose}
-            allowZoom={false}
-            allowRotate={false}
-            allowReset={false}
-            startIndex={idx}
-          /> 
+        <Lightbox
+          image={images.length === 1 && img}
+          images={images.length > 1 && images}
+          onClose={handleClose}
+          allowRotate={false}
+          allowReset={false}
+          startIndex={idx}
+        />
       </Dialog>
     </>
   );

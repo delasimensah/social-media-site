@@ -42,7 +42,7 @@ const Post = ({ post }) => {
         <div>
           <Dropdown
             icon={<IoEllipsisVertical className="dark:text-gray-400" />}
-            menu={<PostDropdown />}
+            menu={<PostDropdown username={post.username} />}
             w="w-56"
           />
         </div>
