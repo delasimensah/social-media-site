@@ -19,22 +19,23 @@ const DropdownMenu = () => {
       <div className="overflow-hidden rounded-md shadow-lg">
         <div className="relative grid bg-white dark:bg-dark ">
           <Link href={`/profile/${displayName}`}>
-            <DropdownItem>
+            <a className="dropdown-item">
               <IoPersonOutline className="dropdown-icon" />
 
               <p className="dropdown-text">Profile</p>
-            </DropdownItem>
+            </a>
           </Link>
 
-          <DropdownItem
+          <a
             onClick={() => {
               signout();
             }}
+            className="dropdown-item"
           >
             <IoLogOutOutline className="dropdown-icon" />
 
             <p className="dropdown-text">Sign Out</p>
-          </DropdownItem>
+          </a>
         </div>
       </div>
     </>

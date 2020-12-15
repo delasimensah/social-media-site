@@ -20,7 +20,7 @@ const ProfilePage = () => {
   const [fetching, setFetching] = useState(true);
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [feed, setFeed] = useState([]);
+  const [posts, setPosts] = useState([]);
 
   const AuthUser = useAuthUser();
 
@@ -34,7 +34,10 @@ const ProfilePage = () => {
       .where("username", "==", id)
       .limit(1)
       .onSnapshot((snapshot) => {
-        const data = snapshot.docs.map((doc) => doc.data());
+        const data = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
 
         if (data.length === 0) {
           setUserInfo(null);
@@ -67,7 +70,7 @@ const ProfilePage = () => {
           };
         });
 
-        setFeed(data);
+        setPosts(data);
         setLoading(false);
       });
 
@@ -86,13 +89,13 @@ const ProfilePage = () => {
         {fetching ? (
           <ProfilePageSkeleton />
         ) : (
-          <ProfileInfo userInfo={userInfo} />
+          <ProfileInfo userInfo={userInfo} posts={posts} />
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-[2fr,1fr] gap-10">
           <div className="space-y-5">
-            {AuthUser.id && <CreatePostCard />}
-            {loading ? <FeedSkeleton /> : <Feed posts={feed} />}
+            {/* {AuthUser.id && <CreatePostCard />} */}
+            {loading ? <FeedSkeleton /> : <Feed posts={posts} />}
           </div>
 
           <div className="hidden space-y-10 overflow-hidden lg:block">

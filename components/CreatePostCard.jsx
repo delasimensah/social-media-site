@@ -23,7 +23,7 @@ const CreatePostCard = () => {
       const images = await Promise.all(
         files.map(async (file) => {
           const ref = storage.ref(
-            `${AuthUser.displayName}/${new Date()}_${file.name}`
+            `${AuthUser.displayName}/${new Date().toISOString()}_${file.name}`
           );
 
           const snapshot = await ref.put(file);
@@ -37,7 +37,7 @@ const CreatePostCard = () => {
         profileImage: AuthUser.photoURL,
         username: AuthUser.displayName,
         text: postRef.current.value,
-        createdAt: new Date(),
+        createdAt: new Date().toISOString(),
         images,
         likes: [],
         comments: [],
@@ -109,14 +109,6 @@ const CreatePostCard = () => {
                 className="hidden"
               />
             </label>
-
-            <div className="flex items-center p-2 space-x-2 text-gray-400 rounded-full cursor-pointer bg-gray-400/20 hover:bg-purple-600/20">
-              <IoLocationOutline className="w-5 h-5" />
-            </div>
-
-            <div className="flex items-center p-2 space-x-2 text-gray-400 rounded-full cursor-pointer bg-gray-400/20 hover:bg-purple-600/20">
-              <IoPersonOutline className="w-5 h-5" />
-            </div>
           </div>
 
           <button

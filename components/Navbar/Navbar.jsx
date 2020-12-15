@@ -37,13 +37,13 @@ const Navbar = () => {
         <div className="flex items-center space-x-6">
           <MenuLink link="/" icon={<IoHomeOutline className="nav-icon" />} />
 
-          <div className="relative">
+          {/* <div className="relative">
             <Indicator />
             <MenuLink
               link="/chat"
               icon={<IoChatbubblesOutline className="nav-icon" />}
             />
-          </div>
+          </div> */}
 
           <div className="relative">
             <Indicator className="top-[4px]" />

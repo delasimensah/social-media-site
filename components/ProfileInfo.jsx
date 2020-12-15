@@ -3,7 +3,10 @@ import { format } from "timeago.js";
 import { withAuthUser, useAuthUser } from "next-firebase-auth";
 import { IoLocationOutline, IoCalendarOutline } from "react-icons/io5";
 
-const ProfileInfo = ({ userInfo }) => {
+//components
+import EditProfileButton from "./EditProfileButton";
+
+const ProfileInfo = ({ userInfo, posts }) => {
   const AuthUser = useAuthUser();
 
   return (
@@ -20,9 +23,13 @@ const ProfileInfo = ({ userInfo }) => {
 
       {AuthUser.id ? (
         <div className="flex justify-end pt-5">
-          <button className="px-3 py-1 text-purple-600 border-2 border-purple-600 rounded-full md:px-5 md:py-2">
-            Edit Profile
-          </button>
+          {AuthUser.id === userInfo.id ? (
+            <EditProfileButton userInfo={userInfo} />
+          ) : (
+            <button className="px-3 py-1 text-purple-600 border-2 border-purple-600 rounded-full md:px-5 md:py-2">
+              Follow
+            </button>
+          )}
         </div>
       ) : (
         <div className="flex justify-end h-10 mt-5 md:h-14"></div>
@@ -30,7 +37,7 @@ const ProfileInfo = ({ userInfo }) => {
 
       <div className="grid gap-5 px-5 pb-10 md:grid-cols-2">
         <div className="space-y-3">
-          <h1 className="dark:text-white md:text-lg ">{userInfo?.username}</h1>
+          <h1 className="dark:text-white md:text-lg ">@{userInfo?.username}</h1>
 
           <p className="text-sm text-color">{userInfo?.bio}</p>
 
@@ -50,10 +57,10 @@ const ProfileInfo = ({ userInfo }) => {
         </div>
 
         <div className="flex items-center space-x-5 md:justify-center">
-          {/* <div className="text-center">
-                <p className="text-lg dark:text-white">Posts</p>
-                <p className="text-color">10</p>
-              </div> */}
+          <div className="flex space-x-2">
+            <p className="text-color">{posts.length}</p>
+            <p className=" dark:text-white">Posts</p>
+          </div>
 
           <div className="flex space-x-2">
             <p className="text-color">{userInfo?.followers.length}</p>

@@ -52,6 +52,14 @@ a {
   .text-color {
     @apply text-gray-700 dark:text-gray-400;
   }
+
+  .btn {
+    @apply w-40 py-[5px] text-sm text-gray-300 uppercase bg-purple-600 rounded-full flex justify-center;
+  }
+
+  .dropdown-item {
+    @apply flex items-center p-2 space-x-3 transition duration-150 ease-in-out hover:bg-gray-100 dark:hover:bg-darklight;
+  }
 }
 
 @layer components {
