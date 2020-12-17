@@ -62,7 +62,7 @@ const CreatePostCard = () => {
             <img
               src={AuthUser.photoURL}
               alt=""
-              className="w-full h-full rounded-full bg-black/30"
+              className="object-cover w-full h-full rounded-full bg-black/30"
             />
           </div>
 

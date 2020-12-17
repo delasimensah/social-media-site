@@ -25,7 +25,7 @@ const PostImage = ({ images, img, idx }) => {
         <img
           src={img}
           alt=""
-          className="object-cover object-center w-full h-full"
+          className="object-cover w-full h-full"
           onClick={handleClickOpen}
         />
       </div>
