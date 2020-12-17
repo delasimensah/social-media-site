@@ -45,6 +45,16 @@ const CreatePostCard = () => {
       //add post to database
       await ref.add(post);
 
+      const userRef = firestore.doc(`users/${AuthUser.id}`);
+      const userDoc = await userRef.get();
+
+      const media = userDoc.data().media;
+
+      //update media field in database
+      await userRef.update({
+        media: [...media, ...images],
+      });
+
       postRef.current.value = "";
       setFiles([]);
       setLoading(false);
