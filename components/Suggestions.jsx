@@ -46,7 +46,7 @@ const SuggestionCard = ({ sugg }) => {
         <img
           src={sugg.image}
           alt="profile picture"
-          className="object-fill object-top w-full h-full rounded-full"
+          className="object-cover object-top w-full h-full rounded-full"
         />
       </div>
 

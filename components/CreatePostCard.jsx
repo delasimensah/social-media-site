@@ -1,9 +1,5 @@
 import React, { useRef, useState } from "react";
-import {
-  IoImagesOutline,
-  IoLocationOutline,
-  IoPersonOutline,
-} from "react-icons/io5";
+import { IoImagesOutline } from "react-icons/io5";
 import { withAuthUser, useAuthUser } from "next-firebase-auth";
 import { storage, firestore } from "../firebase/firebaseClient";
 
@@ -23,7 +19,7 @@ const CreatePostCard = () => {
       const images = await Promise.all(
         files.map(async (file) => {
           const ref = storage.ref(
-            `${AuthUser.displayName}/${new Date().toISOString()}_${file.name}`
+            `${AuthUser.id}/${new Date().toISOString()}_${file.name}`
           );
 
           const snapshot = await ref.put(file);
@@ -36,6 +32,7 @@ const CreatePostCard = () => {
       const post = {
         profileImage: AuthUser.photoURL,
         username: AuthUser.displayName,
+        userId: AuthUser.id,
         text: postRef.current.value,
         createdAt: new Date().toISOString(),
         images,

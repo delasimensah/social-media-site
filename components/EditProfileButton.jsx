@@ -68,7 +68,7 @@ const EditProfileButton = ({ userInfo }) => {
       </button>
 
       <Dialog open={open} onClose={handleClose}>
-        <div className="p-10 space-y-10 bg-white border dark:bg-dark">
+        <div className="px-2 py-10 space-y-10 bg-white md:px-5 dark:bg-dark">
           <h1 className="text-xl text-center dark:text-gray-200">
             Edit Information
           </h1>

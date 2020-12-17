@@ -7,10 +7,10 @@ const ProfileImg = () => {
     <div className="w-6 h-6 overflow-hidden rounded-full">
       <img
         src={AuthUser.photoURL}
-        alt="profile picture"
+        alt=""
         width={50}
         height={50}
-        className="w-full h-full bg-black/30"
+        className="object-cover w-full h-full bg-black/30"
       />
     </div>
   );

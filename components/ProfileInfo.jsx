@@ -21,10 +21,11 @@ const ProfileInfo = ({ userInfo, posts }) => {
     const file = e.target.files[0];
     setLoading(true);
 
+    const extension = file.name.split(".").pop();
+    const name = `cover-image.${extension}`;
+
     try {
-      const ref = storage.ref(
-        `${AuthUser.displayName}/${new Date().toISOString()}_${file.name}`
-      );
+      const ref = storage.ref(`${AuthUser.id}/${name}`);
 
       const snapshot = await ref.put(file);
 
@@ -42,12 +43,14 @@ const ProfileInfo = ({ userInfo, posts }) => {
 
   const updateProfileImage = async (e) => {
     const file = e.target.files[0];
+
     setLoadingProfile(true);
 
+    const extension = file.name.split(".").pop();
+    const name = `profile-image.${extension}`;
+
     try {
-      const ref = storage.ref(
-        `${AuthUser.displayName}/${new Date().toISOString()}_${file.name}`
-      );
+      const ref = storage.ref(`${AuthUser.id}/${name}`);
 
       const snapshot = await ref.put(file);
 
@@ -72,7 +75,11 @@ const ProfileInfo = ({ userInfo, posts }) => {
     <div>
       <div className="relative">
         <div className="relative h-40 overflow-hidden bg-gray-400 rounded-md md:h-60">
-          <img src={userInfo?.coverPhoto} alt="" className="w-full h-full" />
+          <img
+            src={userInfo?.coverPhoto}
+            alt=""
+            className="object-cover object-top w-full h-full"
+          />
 
           {AuthUser.id === userInfo.id && (
             <label
@@ -87,7 +94,7 @@ const ProfileInfo = ({ userInfo, posts }) => {
               <input
                 type="file"
                 id="cover"
-                accept=".png,.jpeg,.jpg"
+                accept=".png,.jpeg,.jpg,.gif"
                 className="hidden"
                 onChange={updateCoverImage}
               />
@@ -100,7 +107,7 @@ const ProfileInfo = ({ userInfo, posts }) => {
             <img
               src={userInfo?.profileImage}
               alt=""
-              className="w-full h-full rounded-full"
+              className="object-cover w-full h-full rounded-full"
             />
 
             {AuthUser.id === userInfo.id && (

@@ -48,7 +48,7 @@ const Post = ({ post }) => {
                 <img
                   src={post.profileImage}
                   alt=""
-                  className="w-full h-full rounded-full"
+                  className="object-cover w-full h-full rounded-full"
                 />
               </a>
             </Link>
