@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   IoEllipsisVertical,
   IoChatbubbleOutline,
@@ -8,6 +8,7 @@ import {
 import Link from "next/link";
 import { format } from "timeago.js";
 import { firestore } from "../firebase/firebaseClient.js";
+import { withAuthUser, useAuthUser } from "next-firebase-auth";
 
 //mui
 import Dialog from "@material-ui/core/Dialog";
@@ -18,9 +19,18 @@ import PostDropdown from "./PostDropdown";
 import PostImage from "./PostImage";
 
 const Post = ({ post }) => {
+  const AuthUser = useAuthUser();
   const [liked, setLiked] = useState(false);
 
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const like = post.likes.find((like) => like.id === AuthUser.id);
+
+    if (like && like.id === AuthUser.id) {
+      setLiked(true);
+    }
+  }, [AuthUser.id]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -33,6 +43,38 @@ const Post = ({ post }) => {
   const deletePost = async () => {
     try {
       await firestore.doc(`posts/${post.id}`).delete();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const likePost = async () => {
+    const user = {
+      id: AuthUser.id,
+      userImage: AuthUser.photoURL,
+    };
+
+    try {
+      const docRef = firestore.doc(`posts/${post.id}`);
+
+      //check if already likes
+      const alreadyLiked = post.likes.find((like) => like.id === user.id);
+
+      if (alreadyLiked) {
+        const filteredLikes = post.likes.filter(
+          (like) => like.id !== alreadyLiked.id
+        );
+
+        setLiked(false);
+
+        return docRef.update({
+          likes: [...filteredLikes],
+        });
+      }
+      setLiked(true);
+      await docRef.update({
+        likes: [...post.likes, user],
+      });
     } catch (error) {
       console.log(error.message);
     }
@@ -99,7 +141,7 @@ const Post = ({ post }) => {
 
         <div className="flex items-center space-x-5">
           <div className="flex items-center space-x-2">
-            <button onClick={() => setLiked(!liked)}>
+            <button onClick={likePost}>
               {liked ? (
                 <IoHeart className="text-red-600 cursor-pointer w-7 h-7 " />
               ) : (
@@ -111,14 +153,17 @@ const Post = ({ post }) => {
 
             {post.likes.length > 0 && (
               <div className="flex -space-x-1 overflow-hidden">
-                {post.likes.map((like, idx) => (
-                  <img
-                    key={idx}
-                    className="inline-block w-6 h-6 rounded-full ring-2 ring-white dark:ring-[#202836]"
-                    src={like.userImage}
-                    alt=""
-                  />
-                ))}
+                {post.likes
+                  .filter((_, idx) => idx < 4)
+                  .reverse()
+                  .map((like, idx) => (
+                    <img
+                      key={idx}
+                      className="inline-block w-6 h-6 rounded-full ring-2 ring-white dark:ring-[#202836]"
+                      src={like.userImage}
+                      alt=""
+                    />
+                  ))}
               </div>
             )}
           </div>
@@ -163,4 +208,4 @@ const Post = ({ post }) => {
   );
 };
 
-export default Post;
+export default withAuthUser()(Post);
