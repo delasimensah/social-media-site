@@ -12,6 +12,7 @@ import Suggestions from "../../components/Suggestions";
 import ProfilePageSkeleton from "../../components/Skeletons/ProfilePageSkeleton";
 import ProfileInfo from "../../components/ProfileInfo";
 import FeedSkeleton from "../../components/Skeletons/FeedSkeleton";
+import EmptyMessage from "../../components/EmptyMessage";
 
 const ProfilePage = () => {
   const router = useRouter();
@@ -80,7 +81,11 @@ const ProfilePage = () => {
   }, [id]);
 
   if (!fetching && !userInfo) {
-    return <div>No user found</div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        Sorry user does not exist
+      </div>
+    );
   }
 
   return (
@@ -95,7 +100,13 @@ const ProfilePage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-[2fr,1fr] gap-10">
           <div className="space-y-5">
             {/* {AuthUser.id && <CreatePostCard />} */}
-            {loading ? <FeedSkeleton /> : <Feed posts={posts} />}
+            {loading ? (
+              <FeedSkeleton />
+            ) : posts.length === 0 ? (
+              <EmptyMessage message="You have no posts" />
+            ) : (
+              <Feed posts={posts} />
+            )}
           </div>
 
           <div className="hidden space-y-10 overflow-hidden lg:block">

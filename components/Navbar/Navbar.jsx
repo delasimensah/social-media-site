@@ -45,14 +45,14 @@ const Navbar = () => {
             />
           </div> */}
 
-          <div className="relative">
+          {/* <div className="relative">
             <Indicator className="top-[4px]" />
             <Dropdown
               icon={<IoNotificationsOutline className="nav-icon " />}
               menu={<Notifications />}
               w="w-72 lg:w-96"
             />
-          </div>
+          </div> */}
 
           <ColorModeButton />
 

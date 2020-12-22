@@ -43,7 +43,7 @@ const HomePage = () => {
 
   return (
     <Layout>
-      <div className="container grid grid-cols-1 lg:grid-cols-[2fr,1fr] gap-10">
+      <div className="container grid grid-cols-1 xl:grid-cols-[2fr,1fr] gap-10">
         <div className="space-y-5">
           <CreatePostCard />
 

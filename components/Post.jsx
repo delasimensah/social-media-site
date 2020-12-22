@@ -159,7 +159,7 @@ const Post = ({ post }) => {
                   .map((like, idx) => (
                     <img
                       key={idx}
-                      className="inline-block w-6 h-6 rounded-full ring-2 ring-white dark:ring-[#202836]"
+                      className="object-cover inline-block w-6 h-6 rounded-full ring-2 ring-white dark:ring-[#202836]"
                       src={like.userImage}
                       alt=""
                     />
