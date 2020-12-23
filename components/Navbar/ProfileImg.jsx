@@ -8,8 +8,6 @@ const ProfileImg = () => {
       <img
         src={AuthUser.photoURL}
         alt=""
-        width={50}
-        height={50}
         className="object-cover w-full h-full bg-black/30"
       />
     </div>

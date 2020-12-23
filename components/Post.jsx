@@ -17,6 +17,7 @@ import Dialog from "@material-ui/core/Dialog";
 import Dropdown from "./Navbar/Dropdown";
 import PostDropdown from "./PostDropdown";
 import PostImage from "./PostImage";
+import CommentButton from "./CommentButton.jsx";
 
 const Post = ({ post }) => {
   const AuthUser = useAuthUser();
@@ -169,7 +170,7 @@ const Post = ({ post }) => {
           </div>
 
           <div className="flex items-center space-x-2">
-            <IoChatbubbleOutline className="cursor-pointer w-7 h-7 dark:text-gray-400" />
+            <CommentButton comments={post.comments} id={post.id} />
             <span className="dark:text-gray-400">{post.comments.length}</span>
             {post.comments.length > 0 && (
               <div className="flex -space-x-1 overflow-hidden">
@@ -188,7 +189,7 @@ const Post = ({ post }) => {
       </div>
 
       <Dialog open={open} onClose={handleClose}>
-        <div className="w-full h-full p-10 space-y-5 bg-white rounded dark:bg-dark dark:text-gray-200">
+        <div className="w-full h-full p-10 space-y-5 bg-white dark:bg-dark dark:text-gray-200">
           <div>
             <p>
               Are you sure you want to delete this post? This action cannot be

@@ -46,7 +46,7 @@ a {
   }
 
   .container {
-    @apply mt-20 w-[95vw] lg:w-[80vw] mx-auto pb-10;
+    @apply mt-20 w-[100vw] lg:w-[80vw] mx-auto pb-10;
   }
 
   .text-color {
