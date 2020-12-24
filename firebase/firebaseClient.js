@@ -24,4 +24,50 @@ export const storage = firebase.storage();
 // firestore.useEmulator("localhost", 8080);
 // functions.useEmulator("localhost", 5001);
 
+export const follow = async (followerId, toFollowId) => {
+  const followerRef = firestore.doc(`users/${followerId}`);
+  const toFollowRef = firestore.doc(`users/${toFollowId}`);
+
+  try {
+    const followerSnapshot = await followerRef.get();
+    //get following list of follower
+    const following = followerSnapshot.data().following;
+
+    const toFollowSnapshot = await toFollowRef.get();
+    //get followers list of person to follow
+    const followers = toFollowSnapshot.data().followers;
+
+    //if already followed unfollow
+    if (following.includes(toFollowId)) {
+      const newFollowing = following.filter(
+        (following) => following !== toFollowId
+      );
+      await followerRef.update({
+        following: newFollowing,
+      });
+
+      const newFollowers = followers.filter(
+        (follower) => follower !== followerId
+      );
+
+      await toFollowRef.update({
+        followers: newFollowers,
+      });
+
+      return;
+    }
+
+    //else follow user
+    await followerRef.update({
+      following: [...following, toFollowId],
+    });
+
+    await toFollowRef.update({
+      followers: [...followers, followerId],
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 export default firebase;

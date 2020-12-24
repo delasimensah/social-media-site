@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { format } from "timeago.js";
 import { withAuthUser, useAuthUser } from "next-firebase-auth";
 import {
@@ -7,7 +7,7 @@ import {
   IoCameraOutline,
   IoCogOutline,
 } from "react-icons/io5";
-import { firestore, storage } from "../firebase/firebaseClient";
+import { firestore, storage, follow } from "../firebase/firebaseClient";
 
 //components
 import EditProfileButton from "./EditProfileButton";
@@ -16,6 +16,29 @@ const ProfileInfo = ({ userInfo, posts }) => {
   const AuthUser = useAuthUser();
   const [loading, setLoading] = useState(false);
   const [loadingProfile, setLoadingProfile] = useState(false);
+  const [following, setFollowing] = useState(false);
+
+  useEffect(() => {
+    if (!AuthUser.id) {
+      return;
+    }
+    const unsubscribe = firestore
+      .doc(`users/${AuthUser.id}`)
+      .onSnapshot((docSnapshot) => {
+        const user = {
+          id: docSnapshot.id,
+          following: docSnapshot.data().following,
+        };
+
+        if (user.following.includes(userInfo.id)) {
+          return setFollowing(true);
+        }
+
+        setFollowing(false);
+      });
+
+    return () => unsubscribe();
+  }, [AuthUser.id]);
 
   const updateCoverImage = async (e) => {
     const file = e.target.files[0];
@@ -69,6 +92,10 @@ const ProfileInfo = ({ userInfo, posts }) => {
       console.log(error.message);
       setLoadingProfile(false);
     }
+  };
+
+  const followUser = (id) => {
+    return follow(AuthUser.id, id);
   };
 
   return (
@@ -138,8 +165,11 @@ const ProfileInfo = ({ userInfo, posts }) => {
           {AuthUser.id === userInfo.id ? (
             <EditProfileButton userInfo={userInfo} />
           ) : (
-            <button className="px-3 py-1 text-purple-600 border-2 border-purple-600 rounded-full md:px-5 md:py-2">
-              Follow
+            <button
+              className="px-3 py-1 text-purple-600 border-2 border-purple-600 rounded-full md:px-5 md:py-2"
+              onClick={() => followUser(userInfo.id)}
+            >
+              {following ? "Unfollow" : "Follow"}
             </button>
           )}
         </div>
