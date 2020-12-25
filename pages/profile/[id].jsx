@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import posts from "../../utils/posts";
 import { useRouter } from "next/router";
 import { firestore } from "../../firebase/firebaseClient";
-import { withAuthUser, useAuthUser } from "next-firebase-auth";
 
 //components
 import Layout from "../../components/Layout";
-import CreatePostCard from "../../components/CreatePostCard";
+// import CreatePostCard from "../../components/CreatePostCard";
 import Feed from "../../components/Feed";
 import Suggestions from "../../components/Suggestions";
 import ProfilePageSkeleton from "../../components/Skeletons/ProfilePageSkeleton";
@@ -22,8 +20,6 @@ const ProfilePage = () => {
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
-
-  const AuthUser = useAuthUser();
 
   useEffect(() => {
     if (!id) {
@@ -118,4 +114,4 @@ const ProfilePage = () => {
   );
 };
 
-export default withAuthUser()(ProfilePage);
+export default ProfilePage;

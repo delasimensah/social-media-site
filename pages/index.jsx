@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
+  useAuthUser,
   withAuthUser,
   AuthAction,
   withAuthUserTokenSSR,
@@ -14,32 +15,75 @@ import Suggestions from "../components/Suggestions";
 import FeedSkeleton from "../components/Skeletons/FeedSkeleton";
 
 const HomePage = () => {
+  const AuthUser = useAuthUser();
+
   const [loading, setLoading] = useState(false);
   const [feed, setFeed] = useState([]);
 
   useEffect(() => {
+    if (!AuthUser.id) {
+      return;
+    }
     setLoading(true);
 
     const unsubscribe = firestore
-      .collection("posts")
-      .orderBy("createdAt", "desc")
-      .limit(50)
-      .onSnapshot((snapshot) => {
-        const data = snapshot.docs.map((doc) => {
-          return {
-            id: doc.id,
-            ...doc.data(),
-          };
-        });
+      .doc(`users/${AuthUser.id}`)
+      .onSnapshot(async (docSnapshot) => {
+        const following = docSnapshot.data().following;
+        const username = docSnapshot.data().username;
+        console.log(username);
 
-        setFeed(data);
-        setLoading(false);
+        let feed = [];
+
+        following.forEach(async (personId) => {
+          firestore
+            .collection("posts")
+            .where("userId", "==", personId)
+            .orderBy("createdAt", "desc")
+            .onSnapshot((snapshot) => {
+              const posts = snapshot.docs.map((doc) => {
+                return { id: doc.id, ...doc.data() };
+              });
+
+              feed = [...feed, ...posts];
+
+              //sort based on date created
+              feed.sort((a, b) => {
+                return new Date(b.createdAt) - new Date(a.createdAt);
+              });
+
+              setFeed(feed);
+              setLoading(false);
+            });
+        });
       });
 
-    return () => {
-      unsubscribe();
-    };
-  }, []);
+    return () => unsubscribe();
+  }, [AuthUser.id]);
+
+  // useEffect(() => {
+  //   setLoading(true);
+
+  //   const unsubscribe = firestore
+  //     .collection("posts")
+  //     .orderBy("createdAt", "desc")
+  //     .limit(50)
+  //     .onSnapshot((snapshot) => {
+  //       const data = snapshot.docs.map((doc) => {
+  //         return {
+  //           id: doc.id,
+  //           ...doc.data(),
+  //         };
+  //       });
+
+  //       setFeed(data);
+  //       setLoading(false);
+  //     });
+
+  //   return () => {
+  //     unsubscribe();
+  //   };
+  // }, []);
 
   return (
     <Layout>
