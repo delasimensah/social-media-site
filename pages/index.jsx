@@ -17,73 +17,93 @@ import FeedSkeleton from "../components/Skeletons/FeedSkeleton";
 const HomePage = () => {
   const AuthUser = useAuthUser();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [feed, setFeed] = useState([]);
+
+  // const getFeed = async () => {
+  //   setLoading(true);
+  //   let feed = [];
+  //   //get user posts
+  //   const userPostsSnapshot = await firestore
+  //     .collection(`posts`)
+  //     .where("username", "==", AuthUser.displayName)
+  //     .get();
+  //   const data = userPostsSnapshot.docs.map((doc) => ({
+  //     id: doc.id,
+  //     ...doc.data(),
+  //   }));
+
+  //   feed = [...data];
+
+  //   //get posts of people following
+  //   const userSnapshot = await firestore.doc(`users/${AuthUser.id}`).get();
+  //   const userFollowing = userSnapshot.data().following;
+
+  //   userFollowing.forEach(async (userId) => {
+  //     const snapshot = await firestore
+  //       .collection("posts")
+  //       .where("userId", "==", userId)
+  //       .get();
+
+  //     const posts = snapshot.docs.map((doc) => {
+  //       return { id: doc.id, ...doc.data() };
+  //     });
+
+  //     feed = [...feed, ...posts];
+
+  //     feed.sort((a, b) => {
+  //       return new Date(b.createdAt) - new Date(a.createdAt);
+  //     });
+
+  //     setFeed(feed);
+  //     setLoading(false);
+  //   });
+  // };
 
   useEffect(() => {
     if (!AuthUser.id) {
       return;
     }
-    setLoading(true);
 
-    const unsubscribe = firestore
-      .doc(`users/${AuthUser.id}`)
-      .onSnapshot(async (docSnapshot) => {
-        const following = docSnapshot.data().following;
-        const username = docSnapshot.data().username;
-        console.log(username);
+    const getFeed = async () => {
+      const userSnapshot = await firestore.doc(`users/${AuthUser.id}`).get();
+      const userFollowing = userSnapshot.data().following;
 
-        let feed = [];
+      return firestore
+        .collection("posts")
+        .orderBy("createdAt", "desc")
+        .limit(100)
+        .onSnapshot((snapshot) => {
+          const posts = snapshot.docs.map((doc) => {
+            return { id: doc.id, ...doc.data() };
+          });
 
-        following.forEach(async (personId) => {
-          firestore
-            .collection("posts")
-            .where("userId", "==", personId)
-            .orderBy("createdAt", "desc")
-            .onSnapshot((snapshot) => {
-              const posts = snapshot.docs.map((doc) => {
-                return { id: doc.id, ...doc.data() };
-              });
+          let feed = [];
 
-              feed = [...feed, ...posts];
+          const userPosts = posts.filter(
+            (post) => post.username === AuthUser.displayName
+          );
+          feed = [...feed, ...userPosts];
 
-              //sort based on date created
-              feed.sort((a, b) => {
-                return new Date(b.createdAt) - new Date(a.createdAt);
-              });
+          userFollowing.forEach((userId) => {
+            const filteredPosts = posts.filter(
+              (post) => post.userId === userId
+            );
 
-              setFeed(feed);
-              setLoading(false);
-            });
+            feed = [...feed, ...filteredPosts];
+          });
+
+          feed.sort((a, b) => {
+            return new Date(b.createdAt) - new Date(a.createdAt);
+          });
+
+          setFeed(feed);
+          setLoading(false);
         });
-      });
+    };
 
-    return () => unsubscribe();
+    return getFeed();
   }, [AuthUser.id]);
-
-  // useEffect(() => {
-  //   setLoading(true);
-
-  //   const unsubscribe = firestore
-  //     .collection("posts")
-  //     .orderBy("createdAt", "desc")
-  //     .limit(50)
-  //     .onSnapshot((snapshot) => {
-  //       const data = snapshot.docs.map((doc) => {
-  //         return {
-  //           id: doc.id,
-  //           ...doc.data(),
-  //         };
-  //       });
-
-  //       setFeed(data);
-  //       setLoading(false);
-  //     });
-
-  //   return () => {
-  //     unsubscribe();
-  //   };
-  // }, []);
 
   return (
     <Layout>
