@@ -11,6 +11,7 @@ import { firestore, storage, follow } from "../firebase/firebaseClient";
 
 //components
 import EditProfileButton from "./EditProfileButton";
+import FriendsList from "./FriendsList";
 
 const ProfileInfo = ({ userInfo, posts }) => {
   const AuthUser = useAuthUser();
@@ -161,7 +162,7 @@ const ProfileInfo = ({ userInfo, posts }) => {
       </div>
 
       {AuthUser.id ? (
-        <div className="flex justify-end pt-5">
+        <div className="flex justify-end px-4 pt-5">
           {AuthUser.id === userInfo.id ? (
             <EditProfileButton userInfo={userInfo} />
           ) : (
@@ -204,15 +205,9 @@ const ProfileInfo = ({ userInfo, posts }) => {
             <p className=" dark:text-white">Posts</p>
           </div>
 
-          <div className="flex space-x-2">
-            <p className="text-color">{userInfo?.followers.length}</p>
-            <p className=" dark:text-white">Followers</p>
-          </div>
+          <FriendsList friends={userInfo?.followers} name="Followers" />
 
-          <div className="flex space-x-2">
-            <p className="text-color">{userInfo?.following.length}</p>
-            <p className="dark:text-white">Following</p>
-          </div>
+          <FriendsList friends={userInfo?.following} name="Following" />
         </div>
       </div>
     </div>

@@ -35,8 +35,6 @@ const PostImage = ({ images, img, idx }) => {
           image={images.length === 1 && img}
           images={images.length > 1 && images}
           onClose={handleClose}
-          allowRotate={false}
-          allowReset={false}
           startIndex={idx}
         />
       </Dialog>

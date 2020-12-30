@@ -5,7 +5,7 @@ import Post from "./Post";
 
 const Feed = ({ posts }) => {
   return (
-    <div className="pb-10 space-y-5">
+    <div className="space-y-5">
       {posts.map((post) => {
         return <Post key={post.id} post={post} />;
       })}
