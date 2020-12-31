@@ -46,28 +46,45 @@ const FriendsList = ({ friends, name }) => {
 
       <Dialog open={open} onClose={handleClose}>
         <div className="p-5 space-y-4 overflow-y-scroll bg-white dark:bg-dark dark:text-gray-200 h-96 w-60">
-          {list.map((friend) => {
-            return (
-              <div className="flex items-center space-x-2" key={friend.id}>
-                <div className="w-10 h-10">
-                  <img
-                    src={friend.profileImage}
-                    alt=""
-                    className="object-cover w-full h-full rounded-full bg-black/50"
-                  />
-                </div>
-
-                <Link href={`/profile/${friend.username}`}>
-                  <a
-                    className="flex-grow text-[14px] text-color"
-                    onClick={handleClose}
-                  >
-                    @{friend.username}
-                  </a>
-                </Link>
+          <>
+            {list.length === 0 ? (
+              <div>
+                {name === "followers" ? (
+                  <h1>You have no followers</h1>
+                ) : (
+                  <h1>No followers</h1>
+                )}
               </div>
-            );
-          })}
+            ) : (
+              <>
+                {list.map((friend) => {
+                  return (
+                    <div
+                      className="flex items-center space-x-2"
+                      key={friend.id}
+                    >
+                      <div className="w-10 h-10">
+                        <img
+                          src={friend.profileImage}
+                          alt=""
+                          className="object-cover w-full h-full rounded-full bg-black/50"
+                        />
+                      </div>
+
+                      <Link href={`/profile/${friend.username}`}>
+                        <a
+                          className="flex-grow text-[14px] text-color"
+                          onClick={handleClose}
+                        >
+                          @{friend.username}
+                        </a>
+                      </Link>
+                    </div>
+                  );
+                })}
+              </>
+            )}
+          </>
         </div>
       </Dialog>
     </>
