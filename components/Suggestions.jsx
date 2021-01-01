@@ -16,7 +16,6 @@ const Suggestions = () => {
     const unsubscribe = firestore
       .collection("users")
       .orderBy("createdAt", "desc")
-      .limit(10)
       .onSnapshot((snapshot) => {
         const data = snapshot.docs.map((doc) => {
           return {

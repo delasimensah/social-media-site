@@ -49,10 +49,14 @@ const FriendsList = ({ friends, name }) => {
           <>
             {list.length === 0 ? (
               <div>
-                {name === "followers" ? (
-                  <h1>You have no followers</h1>
+                {name === "Followers" ? (
+                  <h1 className="text-[13px] text-center">
+                    You have no followers
+                  </h1>
                 ) : (
-                  <h1>No followers</h1>
+                  <h1 className="text-[13px] text-center">
+                    You are not following anyone
+                  </h1>
                 )}
               </div>
             ) : (

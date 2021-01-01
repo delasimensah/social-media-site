@@ -13,52 +13,13 @@ import CreatePostCard from "../components/CreatePostCard";
 import Feed from "../components/Feed";
 import Suggestions from "../components/Suggestions";
 import FeedSkeleton from "../components/Skeletons/FeedSkeleton";
+import EmptyMessage from "../components/EmptyMessage";
 
 const HomePage = () => {
   const AuthUser = useAuthUser();
 
   const [loading, setLoading] = useState(true);
   const [feed, setFeed] = useState([]);
-
-  // const getFeed = async () => {
-  //   setLoading(true);
-  //   let feed = [];
-  //   //get user posts
-  //   const userPostsSnapshot = await firestore
-  //     .collection(`posts`)
-  //     .where("username", "==", AuthUser.displayName)
-  //     .get();
-  //   const data = userPostsSnapshot.docs.map((doc) => ({
-  //     id: doc.id,
-  //     ...doc.data(),
-  //   }));
-
-  //   feed = [...data];
-
-  //   //get posts of people following
-  //   const userSnapshot = await firestore.doc(`users/${AuthUser.id}`).get();
-  //   const userFollowing = userSnapshot.data().following;
-
-  //   userFollowing.forEach(async (userId) => {
-  //     const snapshot = await firestore
-  //       .collection("posts")
-  //       .where("userId", "==", userId)
-  //       .get();
-
-  //     const posts = snapshot.docs.map((doc) => {
-  //       return { id: doc.id, ...doc.data() };
-  //     });
-
-  //     feed = [...feed, ...posts];
-
-  //     feed.sort((a, b) => {
-  //       return new Date(b.createdAt) - new Date(a.createdAt);
-  //     });
-
-  //     setFeed(feed);
-  //     setLoading(false);
-  //   });
-  // };
 
   useEffect(() => {
     if (!AuthUser.id) {
@@ -111,10 +72,16 @@ const HomePage = () => {
         <div className="space-y-5">
           <CreatePostCard />
 
-          {loading ? <FeedSkeleton /> : <Feed posts={feed} />}
+          {loading ? (
+            <FeedSkeleton />
+          ) : feed.length === 0 ? (
+            <EmptyMessage message="You have no posts. Create your first one." />
+          ) : (
+            <Feed posts={feed} />
+          )}
         </div>
 
-        <div className="hidden space-y-10 overflow-hidden lg:block">
+        <div className="space-y-10 overflow-hidden">
           <Suggestions />
         </div>
       </div>

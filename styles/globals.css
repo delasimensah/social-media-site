@@ -19,6 +19,10 @@ a {
 }
 
 @layer base {
+  body {
+    @apply bg-[#f4f4f4] dark:bg-darklight;
+  }
+
   button {
     @apply outline-none focus:outline-none;
   }
