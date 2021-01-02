@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { IoImagesOutline } from "react-icons/io5";
+import { IoImagesOutline, IoVideocamOutline } from "react-icons/io5";
 import { withAuthUser, useAuthUser } from "next-firebase-auth";
 import { storage, firestore } from "../firebase/firebaseClient";
 
@@ -9,9 +9,15 @@ const CreatePostCard = () => {
   const AuthUser = useAuthUser();
   const postRef = useRef();
   const [files, setFiles] = useState([]);
+  const [videoFile, setVideoFile] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const createPost = async () => {
+    if (postRef.current.value === "" && files.length === 0 && video === null) {
+      console.log("you need something to post");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -28,6 +34,17 @@ const CreatePostCard = () => {
         })
       );
 
+      let video = "";
+
+      if (videoFile) {
+        const ref = storage.ref(
+          `${AuthUser.id}/${new Date().toISOString()}_${videoFile.name}`
+        );
+
+        const snapshot = await ref.put(videoFile);
+        video = await snapshot.ref.getDownloadURL();
+      }
+
       //structure for a post
       const post = {
         profileImage: AuthUser.photoURL,
@@ -36,6 +53,7 @@ const CreatePostCard = () => {
         text: postRef.current.value,
         createdAt: new Date().toISOString(),
         images,
+        video,
         likes: [],
         comments: [],
       };
@@ -58,6 +76,7 @@ const CreatePostCard = () => {
       postRef.current.value = "";
       setFiles([]);
       setLoading(false);
+      setVideoFile(null);
     } catch (error) {
       console.log(error.message);
       setLoading(false);
@@ -100,20 +119,55 @@ const CreatePostCard = () => {
           </div>
         )}
 
+        {videoFile && (
+          <div className="px-5 py-2">
+            <video width="500" height="320" controls>
+              <source
+                src={URL.createObjectURL(videoFile)}
+                type={videoFile.type}
+              />
+            </video>
+          </div>
+        )}
+
         <div className="flex items-center justify-between px-3 py-2 ">
           <div className="flex items-center space-x-3 md:space-x-5">
             <label
-              htmlFor="files"
+              htmlFor="images"
               className="flex items-center p-2 space-x-2 text-gray-400 rounded-full cursor-pointer bg-gray-400/20 hover:bg-purple-600/20"
             >
               <IoImagesOutline className="w-5 h-5" />
               <input
                 type="file"
-                id="files"
+                id="images"
                 accept=".png,.jpeg,.jpg"
                 multiple
                 onChange={(e) => setFiles([...e.target.files])}
                 className="hidden"
+              />
+            </label>
+
+            <label
+              htmlFor="video"
+              className="flex items-center p-2 space-x-2 text-gray-400 rounded-full cursor-pointer bg-gray-400/20 hover:bg-purple-600/20"
+            >
+              <IoVideocamOutline className="w-5 h-5" />
+              <input
+                type="file"
+                id="video"
+                accept=".mp4,.mkv,.webm,.ogv,.flv,.ts"
+                onChange={(e) => {
+                  const file = e.target.files[0];
+
+                  if (file.size > 5 * 1024 * 1024) {
+                    console.log("video too large");
+                    return;
+                  }
+
+                  setVideoFile(e.target.files[0]);
+                }}
+                className="hidden"
+                size={3000000}
               />
             </label>
           </div>

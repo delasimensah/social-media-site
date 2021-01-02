@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {
-  IoEllipsisVertical,
-  IoChatbubbleOutline,
-  IoHeartOutline,
-  IoHeart,
-} from "react-icons/io5";
+import { IoEllipsisVertical, IoHeartOutline, IoHeart } from "react-icons/io5";
 import Link from "next/link";
 import { format } from "timeago.js";
 import { firestore } from "../firebase/firebaseClient.js";
 import { withAuthUser, useAuthUser } from "next-firebase-auth";
+import ReactPlayer from "react-player/lazy";
 
 //mui
 import Dialog from "@material-ui/core/Dialog";
@@ -137,6 +133,12 @@ const Post = ({ post }) => {
                 <PostImage key={idx} idx={idx} images={post.images} img={img} />
               );
             })}
+          </div>
+        )}
+
+        {post.video && (
+          <div className="flex items-center justify-center">
+            <ReactPlayer url={post.video} controls />
           </div>
         )}
 
