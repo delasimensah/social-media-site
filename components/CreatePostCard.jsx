@@ -142,7 +142,10 @@ const CreatePostCard = () => {
                 id="images"
                 accept=".png,.jpeg,.jpg"
                 multiple
-                onChange={(e) => setFiles([...e.target.files])}
+                onChange={(e) => {
+                  setFiles([...e.target.files]);
+                  setVideoFile(null);
+                }}
                 className="hidden"
               />
             </label>
@@ -165,6 +168,7 @@ const CreatePostCard = () => {
                   }
 
                   setVideoFile(e.target.files[0]);
+                  setFiles([]);
                 }}
                 className="hidden"
                 size={3000000}
