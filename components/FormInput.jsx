@@ -10,7 +10,7 @@ const FormInput = ({ name, type, placeholder, onChange, value, icon, val }) => {
         placeholder={placeholder}
         onChange={onChange}
         value={value}
-        className="text-[13px] text-gray-800 bg-transparent caret-gray-700 dark:text-gray-300 focus:outline-none w-60 dark:caret-gray-300"
+        className="text-base text-gray-800 bg-transparent caret-gray-700 dark:text-gray-300 focus:outline-none w-60 dark:caret-gray-300"
         ref={val}
       />
     </div>
