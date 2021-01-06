@@ -100,7 +100,7 @@ const CreatePostCard = () => {
               name=""
               maxLength="280"
               placeholder="Write something here"
-              className="text-[15px] md:text-base focus:outline-none w-full resize-none dark:bg-[#202836] dark:caret-gray-200 dark:text-gray-200 border-b"
+              className="text-base focus:outline-none w-full resize-none dark:bg-[#202836] dark:caret-gray-200 dark:text-gray-200 border-b"
               ref={postRef}
             ></textarea>
           </div>
