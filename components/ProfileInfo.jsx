@@ -39,7 +39,7 @@ const ProfileInfo = ({ userInfo, posts }) => {
       });
 
     return () => unsubscribe();
-  }, [AuthUser.id]);
+  }, [AuthUser.id, userInfo]);
 
   const updateCoverImage = async (e) => {
     const file = e.target.files[0];
