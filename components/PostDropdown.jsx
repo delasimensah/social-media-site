@@ -28,11 +28,13 @@ const DropdownMenu = ({ username, open }) => {
           )}
 
           {AuthUser.id && username !== AuthUser.displayName && (
-            <a className="dropdown-item">
-              <IoPersonRemoveOutline className="dropdown-icon" />
+            <Link href={`/profile/${username}`}>
+              <a className="dropdown-item">
+                <IoPersonRemoveOutline className="dropdown-icon" />
 
-              <p className="dropdown-text">Unfollow User</p>
-            </a>
+                <p className="dropdown-text">@{username}</p>
+              </a>
+            </Link>
           )}
 
           {!AuthUser.id && (

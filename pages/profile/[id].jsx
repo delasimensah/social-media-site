@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { firestore } from "../../firebase/firebaseClient";
+import Head from "next/head";
 
 //components
 import Layout from "../../components/Layout";
@@ -87,10 +88,21 @@ const ProfilePage = () => {
   return (
     <Layout>
       <div className="container">
-        {fetching ? (
+        {fetching && !userInfo ? (
           <ProfilePageSkeleton />
         ) : (
-          <ProfileInfo userInfo={userInfo} posts={posts} />
+          <>
+            <Head>
+              <title>@{userInfo.username} Profile Page</title>
+              <meta name="description" content="Profile page" />
+              <meta
+                name="viewport"
+                content="minimum-scale=1, initial-scale=1, width=device-width"
+              />
+              <link rel="icon" href="/favicon.png" />
+            </Head>
+            <ProfileInfo userInfo={userInfo} posts={posts} />
+          </>
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-[2fr,1fr] gap-10">

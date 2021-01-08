@@ -106,7 +106,7 @@ const ProfileInfo = ({ userInfo, posts }) => {
           <img
             src={userInfo?.coverPhoto}
             alt=""
-            className="object-cover object-top w-full h-full"
+            className="object-cover w-full h-full"
           />
 
           {AuthUser.id === userInfo.id && (

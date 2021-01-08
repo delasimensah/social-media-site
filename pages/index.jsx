@@ -6,6 +6,7 @@ import {
   withAuthUserTokenSSR,
 } from "next-firebase-auth";
 import { firestore } from "../firebase/firebaseClient";
+import Head from "next/head";
 
 //components
 import Layout from "../components/Layout";
@@ -68,6 +69,16 @@ const HomePage = () => {
 
   return (
     <Layout>
+      <Head>
+        <title>Home</title>
+        <meta name="description" content="Social website feed" />
+        <meta
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width"
+        />
+        <link rel="icon" href="/favicon.png" />
+      </Head>
+
       <div className="container grid grid-cols-1 xl:grid-cols-[2fr,1fr] gap-10">
         <div className="space-y-5">
           <CreatePostCard />
