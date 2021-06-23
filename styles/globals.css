@@ -14,6 +14,7 @@ body {
   margin: 0;
   font-family: "Nunito Sans", sans-serif;
   background-color: #f4f4f4;
+  min-height: 100vh;
 }
 
 a {
@@ -21,18 +22,17 @@ a {
   text-decoration: none;
 }
 
-.arrow-up {
-  width: 0;
-  height: 0;
-  border-left: 9px solid transparent;
-  border-right: 9px solid transparent;
-
-  border-bottom: 9px solid white;
-}
-
 @layer utilities {
   .nav-icon {
-    @apply w-5 h-5 dark:text-white;
+    @apply w-5 h-5 dark:text-gray-300;
+  }
+
+  .dropdown-icon {
+    @apply w-4 h-4 dark:text-white;
+  }
+
+  .dropdown-text {
+    @apply text-sm font-medium;
   }
 }
 
