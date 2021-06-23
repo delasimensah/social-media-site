@@ -4,6 +4,7 @@ import {
   IoNotificationsOutline,
   IoHomeOutline,
 } from "react-icons/io5";
+import Link from "next/link";
 
 //components
 import ColorModeButton from "./ColorModeButton";
@@ -16,20 +17,22 @@ import SearchInput from "./SearchInput";
 
 const Navbar = () => {
   return (
-    <div className="sticky flex items-center justify-between md:justify-start px-3 md:px-16 lg:px-40 py-3 dark:text-white dark:bg-[#151a23] shadow-md">
-      <div className="text-[30px] italic font-semibold tracking-wide">
-        Social
-      </div>
+    <div className="sticky flex items-center justify-between md:justify-start px-3 md:px-16 lg:px-40 py-2 dark:text-white bg-white dark:bg-[#151a23] shadow-md">
+      <Link href="/">
+        <a className="w-16">
+          <img src="/logo.svg" alt="" />
+        </a>
+      </Link>
 
       <div className="items-center justify-center flex-grow hidden md:flex">
         <SearchInput />
       </div>
 
-      <div className="flex items-center space-x-6">
+      <div className="flex items-center space-x-6 border">
         <MenuLink link="/" icon={<IoHomeOutline className="nav-icon" />} />
 
         <MenuLink
-          link="/"
+          link="/chat"
           icon={<IoChatbubblesOutline className="nav-icon" />}
         />
 

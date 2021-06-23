@@ -17,7 +17,7 @@ const MyApp = ({ Component, pageProps }) => {
       <Head>
         <title>Social</title>
         <meta name="description" content="Social media website" />
-        <link rel="icon" href="/favicon2.png" />
+        <link rel="icon" href="/favicon.png" />
       </Head>
 
       <Component {...pageProps} />

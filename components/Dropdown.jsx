@@ -4,10 +4,10 @@ import Fade from "react-reveal/Fade";
 
 const Dropdown = ({ icon, image, menu }) => {
   return (
-    <Popover className="relative flex items-center">
+    <Popover className="relative inline h-auto border" as="a">
       <Popover.Button>{icon || image}</Popover.Button>
 
-      <Popover.Panel className="absolute z-10 top-5">
+      <Popover.Panel className="absolute z-10">
         <Fade bottom duration={500} distance="30px">
           {menu}
         </Fade>
