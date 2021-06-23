@@ -1,13 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
 
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 a {
@@ -15,6 +20,26 @@ a {
   text-decoration: none;
 }
 
-* {
-  box-sizing: border-box;
+.arrow-up {
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+
+  border-bottom: 9px solid white;
+}
+
+@layer utilities {
+  .nav-icon {
+    @apply w-5 h-5 dark:text-white;
+  }
+}
+
+@layer components {
+}
+
+@layer base {
+  button {
+    @apply outline-none focus:outline-none;
+  }
 }
