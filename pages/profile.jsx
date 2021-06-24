@@ -4,7 +4,11 @@ import React from "react";
 import Layout from "../components/Layout";
 
 const ProfilePage = () => {
-  return <Layout>profile page</Layout>;
+  return (
+    <Layout>
+      <div className="container">profile</div>
+    </Layout>
+  );
 };
 
 export default ProfilePage;

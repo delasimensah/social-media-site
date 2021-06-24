@@ -4,7 +4,11 @@ import React from "react";
 import Layout from "../components/Layout";
 
 const Chat = () => {
-  return <Layout>chat page</Layout>;
+  return (
+    <Layout>
+      <div className="container">chat</div>
+    </Layout>
+  );
 };
 
 export default Chat;
