@@ -26,7 +26,7 @@ a {
 
 @layer utilities {
   .nav-icon {
-    @apply w-5 h-5 text-gray-700 dark:text-gray-300;
+    @apply w-6 h-6 text-gray-700 dark:text-gray-300;
   }
 
   .dropdown-icon {

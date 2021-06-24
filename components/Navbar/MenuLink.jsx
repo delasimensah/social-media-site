@@ -3,9 +3,11 @@ import Link from "next/link";
 
 const MenuLink = ({ link, icon }) => {
   return (
-    <Link href={link}>
-      <a>{icon}</a>
-    </Link>
+    <div className="border">
+      <Link href={link}>
+        <a>{icon}</a>
+      </Link>
+    </div>
   );
 };
 
