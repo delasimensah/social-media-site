@@ -8,6 +8,11 @@ module.exports = {
         dark: "#151a23",
         darklight: "#283143",
       },
+      backgroundImage: () => ({
+        friends: "url('/friends-md.jpg')",
+        "friends-sm": "url('/friends-sm.png')",
+        "friends-lg": "url('/friends-lg.jpg')",
+      }),
     },
   },
   variants: {

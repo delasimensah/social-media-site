@@ -14,14 +14,14 @@ import Notifications from "./Notifications";
 import ProfileImg from "./ProfileImg";
 import DropdownMenu from "./DropdownMenu";
 import SearchInput from "./SearchInput";
-import Logo from "./Logo";
+import Logo from "../Logo";
 
 const Navbar = () => {
   return (
-    <div className="sticky flex items-center justify-between px-3 py-2 bg-white shadow-md md:justify-start md:px-16 lg:px-40 dark:bg-dark">
+    <div className="sticky flex items-center justify-between px-3 py-3 bg-white shadow-md md:justify-start md:px-16 lg:px-40 dark:bg-dark">
       <Link href="/">
         <a className="w-16">
-          <Logo className="fill-current dark:text-white" />
+          <Logo />
         </a>
       </Link>
 
