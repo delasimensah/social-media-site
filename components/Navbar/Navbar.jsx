@@ -40,7 +40,7 @@ const Navbar = () => {
         <Dropdown
           icon={<IoNotificationsOutline className="nav-icon" />}
           menu={<Notifications />}
-          w="w-96"
+          w="w-72 lg:w-96"
         />
 
         <ColorModeButton />

@@ -6,15 +6,9 @@
 
 * {
   box-sizing: border-box;
-}
-
-html,
-body {
   padding: 0;
   margin: 0;
   font-family: "Nunito Sans", sans-serif;
-  background-color: #f4f4f4;
-  min-height: 100vh;
 }
 
 a {
@@ -22,9 +16,15 @@ a {
   text-decoration: none;
 }
 
+@layer base {
+  button {
+    @apply outline-none focus:outline-none;
+  }
+}
+
 @layer utilities {
   .nav-icon {
-    @apply w-5 h-5 dark:text-gray-300;
+    @apply w-5 h-5 text-gray-700 dark:text-gray-300;
   }
 
   .dropdown-icon {
@@ -37,10 +37,4 @@ a {
 }
 
 @layer components {
-}
-
-@layer base {
-  button {
-    @apply outline-none focus:outline-none;
-  }
 }

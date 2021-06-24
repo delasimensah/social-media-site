@@ -8,7 +8,7 @@ const Dropdown = ({ icon, image, menu, w }) => {
       <Popover.Button as="a">{icon || image}</Popover.Button>
 
       <Popover.Panel
-        className={`absolute z-10 mt-5 transform -translate-x-1/2 left-1/2 text-gray-900 dark:text-white ${w}`}
+        className={`absolute z-10 mt-5 transform -translate-x-44 lg:-translate-x-1/2 lg:left-1/2 text-gray-900 dark:text-white ${w}`}
       >
         <Fade bottom duration={800} distance="60px">
           {menu}

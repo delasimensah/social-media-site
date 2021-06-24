@@ -5,7 +5,7 @@ import Navbar from "./Navbar/Navbar";
 
 const Layout = ({ children }) => {
   return (
-    <div className="">
+    <div className="min-h-screen bg-[#f4f4f4] dark:bg-darklight overflow-hidden">
       <Navbar />
       {children}
     </div>
