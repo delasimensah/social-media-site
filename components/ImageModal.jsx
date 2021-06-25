@@ -1,9 +1,11 @@
 import React, { useRef } from "react";
 import { Dialog } from "@headlessui/react";
 import Fade from "react-reveal/Fade";
+import { imageModalState } from "../contexts/ImageModalContext";
 
-const Modal = ({ open, setOpen, img }) => {
+const ImageModal = () => {
   const cancelButtonRef = useRef(null);
+  const { open, setOpen, img } = imageModalState();
 
   return (
     <Dialog
@@ -28,4 +30,4 @@ const Modal = ({ open, setOpen, img }) => {
   );
 };
 
-export default Modal;
+export default ImageModal;
