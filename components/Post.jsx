@@ -47,7 +47,7 @@ const Post = ({ post }) => {
           <Dropdown
             icon={<IoEllipsisVertical className="dark:text-gray-400" />}
             menu={<PostDropdown />}
-            w="w-48"
+            w="w-56"
           />
         </div>
       </div>
@@ -66,8 +66,9 @@ const Post = ({ post }) => {
             return (
               <div
                 key={idx}
-                className={`${post.images.length === 3 &&
-                  "first:row-span-2"} overflow-hidden rounded-md cursor-pointer bg-gray-700/20`}
+                className={`${
+                  post.images.length === 3 && "first:row-span-2"
+                } overflow-hidden rounded-md cursor-pointer bg-gray-700/20`}
               >
                 <img
                   src={img}
