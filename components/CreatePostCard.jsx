@@ -1,20 +1,22 @@
 import React from "react";
-import Image from "next/image";
 import {
   IoImagesOutline,
   IoLocationOutline,
   IoPersonOutline,
 } from "react-icons/io5";
+import { withAuthUser, useAuthUser } from "next-firebase-auth";
 
 const CreatePostCard = () => {
+  const AuthUser = useAuthUser();
+
   return (
     <div className="bg-white dark:bg-[#202836]  divide-y dark:divide-gray-700 rounded-md shadow-md focus-within:shadow-lg transition-shadow duration-500 ease-in-out">
       <div className="flex px-3 py-5 space-x-5">
         <div className="w-10 h-10 md:w-12 md:h-12">
           <img
-            src="/me.jpg"
+            src={AuthUser.photoURL}
             alt="profile picture"
-            className="w-full h-full rounded-full"
+            className="w-full h-full rounded-full bg-black/30"
           />
         </div>
 
@@ -51,4 +53,4 @@ const CreatePostCard = () => {
   );
 };
 
-export default CreatePostCard;
+export default withAuthUser()(CreatePostCard);

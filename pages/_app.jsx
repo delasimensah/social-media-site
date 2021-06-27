@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
 import Head from "next/head";
 import Provider from "../contexts/Provider";
+import initAuth from "../firebase/initAuth";
 
 import "../styles/globals.css";
+
+initAuth();
 
 const MyApp = ({ Component, pageProps }) => {
   useEffect(() => {
