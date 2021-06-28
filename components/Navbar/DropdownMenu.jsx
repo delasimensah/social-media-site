@@ -2,7 +2,6 @@ import React from "react";
 import Link from "next/link";
 import { IoPersonOutline, IoLogOutOutline } from "react-icons/io5";
 import { authState } from "../../contexts/AuthContext";
-import { withAuthUser, useAuthUser } from "next-firebase-auth";
 
 //components
 import DropdownArrow from "./DropdownArrow";
@@ -10,7 +9,6 @@ import DropdownItem from "./DropdownItem";
 
 const DropdownMenu = () => {
   const { signout } = authState();
-  const { displayName } = useAuthUser();
 
   return (
     <>
@@ -18,7 +16,7 @@ const DropdownMenu = () => {
 
       <div className="overflow-hidden rounded-md shadow-lg">
         <div className="relative grid bg-white dark:bg-dark ">
-          <Link href={`/profile/${displayName}`}>
+          <Link href="/profile/delasi">
             <DropdownItem>
               <IoPersonOutline className="dropdown-icon" />
 
@@ -41,4 +39,4 @@ const DropdownMenu = () => {
   );
 };
 
-export default withAuthUser()(DropdownMenu);
+export default DropdownMenu;

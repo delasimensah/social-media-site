@@ -2,12 +2,11 @@ import React from "react";
 import { withAuthUser, useAuthUser } from "next-firebase-auth";
 
 const ProfileImg = () => {
-  const { photoURL } = useAuthUser();
-
+  const AuthUser = useAuthUser();
   return (
     <div className="w-6 h-6 overflow-hidden rounded-full">
       <img
-        src={photoURL}
+        src={AuthUser.photoURL}
         alt="profile picture"
         width={50}
         height={50}
