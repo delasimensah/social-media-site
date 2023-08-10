@@ -154,6 +154,7 @@ const AuthPage = () => {
                   placeholder="Email"
                   icon={<IoMailOutline className="form-icon" />}
                   val={emailRef}
+                  value="dela@gmail.com"
                 />
 
                 <FormInput
@@ -162,6 +163,7 @@ const AuthPage = () => {
                   placeholder="Password"
                   icon={<IoKeyOutline className="form-icon" />}
                   val={passwordRef}
+                  value="delasi12"
                 />
               </form>
             </Fade>
